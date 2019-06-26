@@ -11,17 +11,55 @@ DuReader is a new large-scale real-world and human sourced MRC dataset in Chines
  - Rich annotation
 
 ## SQuAD Dataset
-
 + links
 
 ##  MARCO V2
-
 + [MS MARCO](http://www.msmarco.org/dataset.aspx) (Microsoft Machine Reading Comprehension) is an English dataset focused on machine reading comprehension and question answering. The design of MS MARCO and DuReader is similar. It is worthwhile examining the MRC systems on both Chinese (DuReader) and English (MS MARCO) datasets. 
-
 + You can download MS MARCO V2 data, and run the following scripts to convert the data from MS MARCO V2 format to DuReader format. Then, you can run and evaluate our DuReader baselines or your DuReader systems on MS MARCO data. 
 
+# Trick
 
-
+# IDEA
++ Pretrain Embedding and Fine tuning
++ Information Retrieval
+    + For Open domain
+        + web crawler 
+        + wikipedia
+        + konwledge base
+        + SQL(NL2SQL)
+    + For Task Specific
+        + special dataset or corpus
++ NLU
+    + Emotion : Sentiment Analysis
+    + Classification : Multi Category and Hierachical Level Category
+    + Semantic Parsing
+        + POS/TAG/NER/
+    + Syntax Analysis
+        + 
+    + Chapter Analysis
+        +
+    + Information Extraction
+        + summarization 
++ Global Logic(Language Modeling or Information Modeling)
+    + Dynamic Embedding
+    + Entity Relation
+    + Knowledge Base
+    + structure
+        + graph 
+        + matirx
++ NLG
+    + span
+    + pointer
+    + generation
+        + reinforce learning for answer regeneration
+        + answer generation : NLG
+            + GAN
+            + VAE 
++ Multi-Task/Joint/Transfor Learning
+    + optimizer
+    + loss function
+    + ranking
++ Unsupervised MRC 
 
 # Process
 
