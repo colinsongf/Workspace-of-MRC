@@ -1,0 +1,5 @@
+# View of No-Factoid QA
+### Natural Language Processing: What is "Non-factoid question answering"?
++ A non-factoid question answering (QA) is an umbrella term that covers all question-answering topics beyond factoid question answering. As a quick reminder: a factoid QA is about providing concise facts. For example, "who is the headmaster of Hogwarts?", "What is the population of Mars", and so on, so forth.
++ In constrast, a non-factoid question can be about anything. You can be asked to provide an answer to a math problem, to explain how to fix a specific model of a car, and so on, so forth. Answering multiple-choice questions also belongs to the area of non-factoid QA, though, there might be some overlap with factoid QA in this task.
++ An important sub-problem of non-factoid QA consists in finding already existing  answers posted on community question answering sites such as Quora! This is very much an IR task.
