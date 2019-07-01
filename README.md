@@ -48,11 +48,15 @@
 
 # Paper List
 
+## BIDAF
+
+## Matching-LSTM
+
 ## Hybird Attention-over-Attention Reader
 
 ## Reading Wikipedia to Answer Open Domain Questions
 
-## Reference 
+## Reference
 
 - 2017年　以前的论文和数据集整理](https://www.zybuluo.com/ShawnNg/note/622592)
 - [2018年　清华77篇机器阅读理解论文](http://www.zhuanzhi.ai/document/87418ceee95a21622d1d7a21f71a894a)
@@ -86,6 +90,10 @@
 ## Run PaddlePaddle
 
 ## Run Keras
+
+## Untils
+
+### Mulit Card Training
 
 # IDEA and Next
 
