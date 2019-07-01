@@ -1,5 +1,3 @@
-# View of Question Answering
-
 ## Factoid QA
 
 - https://github.com/brmson/dataset-factoid-webquestions
