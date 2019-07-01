@@ -1,6 +1,22 @@
 # View of Question Answering
 
+## Factoid QA
+
+- https://github.com/brmson/dataset-factoid-webquestions
+- http://www.cs.cmu.edu/~ark/QA-data/
+- https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/
+- Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus
+  - 将 KB 三元组转化为问句
+
+## No Factoid QA
+
+- Natural Language Processing: What is "Non-factoid question answering"?
+  - A non-factoid question answering (QA) is an umbrella term that covers all question-answering topics beyond factoid question answering. As a quick reminder: a factoid QA is about providing concise facts. For example, "who is the headmaster of Hogwarts?", "What is the population of Mars", and so on, so forth.
+  - In constrast, a non-factoid question can be about anything. You can be asked to provide an answer to a math problem, to explain how to fix a specific model of a car, and so on, so forth. Answering multiple-choice questions also belongs to the area of non-factoid QA, though, there might be some overlap with factoid QA in this task.
+  - An important sub-problem of non-factoid QA consists in finding already existing  answers posted on community question answering sites such as Quora! This is very much an IR task.
+
 ### ACL 2018 | 北大与百度提出多文章验证方法：让机器验证阅读理解候选答案
+
 + https://zhuanlan.zhihu.com/p/36925804
 
 #### 基于知识的智能问答技术　冯岩松
@@ -96,7 +112,7 @@
 - 社区问答有一个很主要的挑战就是句子间词汇与语义的鸿沟。本文使用了 phrase-level 和 token-level 两个层次的 attention 来对句子中的词赋予不同的权重，并参照 CNTN 模型用神经张量网络计算句子相似度的基础上，引入额外特征形成 3-way 交互张量相似度计算。
 	- 围绕答案选择、最佳答案选择、答案触发三个任务，论文提出的模型 RTM 取得了多个 state-of-art 效果。
 	- 论文链接 : https://www.paperweekly.site/papers/1741
- 
+
 # Knowledge base
 ### 「知识表示学习」专题论文推荐 | 每周论文清单
 - https://zhuanlan.zhihu.com/p/33606964

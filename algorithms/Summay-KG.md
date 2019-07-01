@@ -1,4 +1,4 @@
-# Current Solution for Question Answering by Searching
+# Summary of Knowledge Based Reading Comprehension System
 
 ## Reference
 - [1] 基于知识的智能问答技术　冯岩松
@@ -44,7 +44,7 @@
 + 输入 : 自然语言语句
 + 资源 : 结构化知识库, 文本知识, 表格, 结构化/半结构化记录
 + 输出 : 答案
- 
+
 ### Solution 1.1 :语义分析类方案［１］
 + Nautural Language Question  --> **Senmantic Parser** -->   Meaning Representation   --> Map with KB --> Structured Query --> Query over KB --> Answer
 	+ 对输入文本进行语义解析,并在KB中进行结构化查找来确定最终答案
@@ -162,7 +162,7 @@
 		+ End-to-End (主要基于信息抽取类)
 			+ 输入文本直接embedding
 		+ Large-scale Simple Question Answering with Memory Networks
- 			+ https://arxiv.org/pdf/1506.02075v1.pdf
+			 			+ https://arxiv.org/pdf/1506.02075v1.pdf
 		+ Simple Matching
 			 + 只处理单关系的简单问句
 			 + 典型的信息抽取框架
@@ -176,7 +176,7 @@
 			+ 利用 MCCNN 抽象问题的不同侧面
 			+ 利用知识库从不同的侧面刻画候选答案
 			+ (有个图不错,需要加上)
- 
+
 	+ Attention && Global Knowledge
 		+ 之前方法的问题
 			+ 问句语义表示过于简单

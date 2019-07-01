@@ -1,4 +1,4 @@
-# Search QA
+# Summary of Retrieval Reading Comprehension System
 
 ### Reference
 - 检索式问答系统的语义匹配模型

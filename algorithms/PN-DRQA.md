@@ -1,4 +1,5 @@
 # Reading Wikipedia to Answer Open-Domain Quesitons
+
 ## Abstract
 + This paper proposes to tackle open-domain question answering using Wikipedia as the unique knowledge source: the answer to any factoid question is a text span in a Wikipedia article.(问题的答案是维基百科中文本按照一定跨度截取)
 + This task of machine reading at scale combines the challenges of document re-trieval (finding the relevant articles) with that of machine comprehension of text (identifying the answer spans from those articles)
@@ -12,8 +13,10 @@
 + This paper considers the problem of answering factoid questions in an open-domain setting using Wikipedia as the unique knowledge source,such as one does when looking for answers in an encyclopedia(百科全书)
 + Wikipedia is a constantly evolving source（不断发展的信息源） of detailed information that could facilitate intelligent machines — if they are able to leverage（利用） its power
 + Unlike knowledge bases (KBs) such as Freebase (Bollacker et al., 2008) or DBPedia (Auer et al., 2007), which are easier for computers to process but too **sparsely populated（人口稀少）** for open-domain question answering
+	
 	+ Miller at al.2016
 + **Wikipedia contains up-to-date knowledge that humans are interested in**
+	
 	+ It is designed, however, for humans – not machines – to read
 + *Using Wikipedia articles as the knowledge source* causes *the task of question answering (QA)* to combine the challenges of both large-scale open-domain QA and of machine comprehension of text
 + In order to answer any question:
@@ -42,8 +45,8 @@
 		+   (2) Document Reader, a **multi-layer** recurrent neural network **machine comprehension model** trained to detect answer spans in those few returned documents.
 		```
         （1）文档检索器，使用二元散列和TF-IDF匹配的模块，用于给出问题，有效地返回相关文章的子集，
-  		（2）文献阅读器是一种多层递归神经网络机器理解模型，用于检测返回的文档中的回答跨度。
-        ```
+		  		（2）文献阅读器是一种多层递归神经网络机器理解模型，用于检测返回的文档中的回答跨度。
+     ```
 + ###Figure 1 gives an illustration of DrQA.
 ![An overview of our question answering system DrQA.png](/home/apollo/Pictures/An overview of our question answering system DrQA.png)
 
@@ -106,7 +109,7 @@
 + ### Document Reader
 	+ Insired by:
     ```
-	Karl Moritz Hermann, Tomáš Kočiský, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil 	Blunsom. 2015. Teaching machines to read and comprehend. In Advances in Neural Information Processing Systems (NIPS)
+		Karl Moritz Hermann, Tomáš Kočiský, Edward Grefenstette, Lasse Espeholt, Will Kay, Mustafa Suleyman, and Phil 	Blunsom. 2015. Teaching machines to read and comprehend. In Advances in Neural Information Processing Systems (NIPS)
     ```
     + Brief description of the method:
     	+ **Token Level word** :Given a question q consisting of l tokens {${tq}_1,...{tq}_l$} ("Who is the American President?" to 'Who','is','the','American','President')
@@ -131,7 +134,7 @@
             	+ Aligned question embedding (对齐的问题) -- Attention
             		+ ```
             		Felix Hill, Antoine Bordes, Sumit Chopra, and Jason Weston. 2016. The Goldilocks Principle: Reading children’s books with explicit memory representations. In International Conference on Learning Representations (ICLR).
-   					```
+  			 					```
                     + $f_{align}(p_i) = \sum_j a_{i,j}E(q_j)$
                     + $a_{i,j} = \frac{exp(\alpha (E(p_i)) * \alpha(E(q_j)))}{\sum_{j^`} exp(\alpha(E(p_i)) * \alpha(E(q_{j^`})))}$
                     + $\alpha()$ is single dense layer with ReLU nonlinearity
@@ -141,7 +144,7 @@
             	+ put feature vectors as the input to a recurrent neural network and thus obtain:
 				$$
                 	{p_{1},...,p_{n}} = RNN({\tilde{p_{1}},...,\tilde{p_{n}}})
-                $$
+        $$
                 + **How to design RNN?**
                 	+ where $p_i$is expected to encode useful context information around token $tp_i$ .
                 	+ Specifically, we choose to use a multi-layer bidirectional long short-term memory network (LSTM)
@@ -152,7 +155,7 @@
 			+ make tokens {$q_i,...,q_l$} to vector $q$ by
 			$$
             	q = \sum_j b_j q_j
-            $$
+      $$
             + where $b_j$ encodes the importance of each question word:
             $$
             	b_j = \frac{exp(w*q_j)}{\sum_{j`} exp(w*q^{j`})}
@@ -167,14 +170,15 @@
 			+ Concretely,we use a bilinear term（双线性项） to capture the similarity between $p_i$ and q and **compute the probabilities of each token being start and end** as:
 			$$
             	P_{start}(i) \propto exp(p_i W_s q)
-            $$
-            $$
+           $$
+           $$
                 P_{end}(i) \propto exp(p_i W_e q)
-            $$
+           $$
 
 			+ During prediction, choose the best span from token i to token $i^`$ such that $i ≤ i^` ≤ i + 15$ and
 $P start (i) × P end (i 0 )$ is maximized
 		+ *Multi paragraph*
+			
 			+ **Multi Paragraphs(single docs and multi docs) result contrast : ** To make scores compatible across paragraphs in one or several retrieved documents, we use the unnormalized exponential and take argmax over all considered paragraph spans for our final prediction.(我们使用非规范化的指数，并对所有考虑的段跨度进行最终预测的argmax)
 
 ## Data
