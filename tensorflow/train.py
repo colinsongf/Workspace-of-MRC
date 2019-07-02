@@ -9,7 +9,7 @@ from models import dureader, squad
 from metrics import bleu, rl
 from utils import 1, 2, 3
 
-logging = logging.getLogger()
+logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
@@ -19,7 +19,7 @@ class Instructor:
         # tokenizer normal/bert/others
         tokenizer = build_tokenizer(
             fname=[opt.dataset['train'], opt.dataset['test']],
-            max_seq_len=opt.max_seq_len
+            max_seq_len=opt.max_seq_len,
             dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
         # embedding normal/bert/others
 
@@ -106,7 +106,7 @@ class Instructor:
 def main():
     parser = argparse.ArgumentParser()
     # dataset setting
-    parser = add_argument('--dataset_name',  
+    parser = add_argument('--dataset_name', type=str, default = 'dureader')
     # model setting
 
     # optimizer setting
