@@ -1,6 +1,27 @@
 [TOC]
 
 # Dataset
++ Close Test
+    + CNN Daily Mail
+    + CBT
+    + CLOTH
+    + LAMBADA
+    + Who-did-What
+    + CliCR
++ Multi Choice
+    + MCTest
+    + RACE
++ Span Extraction
+    + SQuAD
+    + NewsQA
+    + TriviaQA
+    + DuoRC
++ Free Answering
+    + bAbI
+    + MS MARCO
+    + SearchQA
+    + NarrativeQA
+    + DuReader
 
 | Dataset                                                      | SOTA                                                         | Tips |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
@@ -25,14 +46,43 @@
 - ROUGE-L
 - BLEU
 
-# Tasks and Solutions
+# General Architecture
++ Embedding
+    + One-hot
+    + Static Embedding
+        + Word2Vec
+        + Glove
+    + Dynamic Embedding(Contextualized based)
+        + Cove
+        + ELMo
+        + GPT
+        + BERT
+        + MASS
+        + UniLM
+        + XLNET
+    + Multiple Granularity
+        + Character Embedding
+        + POS
+        + NER
+        + Binary Feature of Exact Match (EM)
+        + Query-Category    
++ Feature Extraction
+    + CNN
+    + RNN
+    + Transformer
++ Context-Question Interaction
+    + Un Attn
+    + Bi Attn
+    + One-hop Interaction
+    + Multi-hop Interaction
++ Answer Prediction
+    + Word Predictor
+    + Opinion Selector
+    + Span Extractor
+    + Answer Generator
+    + **Ranker**
 
-| Tasks       |      |      |
-| ----------- | ---- | ---- |
-| Factoid     |      |      |
-| Close Style |      |      |
-| Open domain |      |      |
-
+# Solutions
 
 | Solutions            |      |      |
 | -------------------- | ---- | ---- |
@@ -41,9 +91,14 @@
 | Semantic Parsing     |      |      |
 | Language Model       |      |      |
 | Generative           |      |      |
+| Multi-passage        |      |      |
+| Unanswerable         |      |      |
 
 
 # Paper List
+
+## Summary
++ [Neural Machine Reading Comprehension: Methods and Trends ](https://arxiv.org/pdf/1907.01118.pdf)
 
 ## BIDAF
 
@@ -91,8 +146,7 @@
 
 ### Mulit Card Training
 
-# IDEA and Next
-
+# Open Issues
 - Pretrain Embedding and Fine tuning
 - Information Retrieval
   - For Open domain
@@ -131,6 +185,14 @@
   - loss function
   - ranking
 - Unsupervised MRC 
+
+- Reinforce Learning
+
+- Answer Ranker
+
+- Sentence Select
+
+- KBMRC
 
 # Plan
 + tensorflow 
