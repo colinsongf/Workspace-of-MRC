@@ -11,6 +11,7 @@
 | Who-did-What(WDW)                                            |                                                              |      |
 | CNN & DailyMail(close style)                                 |                                                              |      |
 | Children's Book Test BookTest                                |                                                              |      |
+| AI chanllenge 2018 观点型阅读理解数据集【https://challenger.ai/dataset/oqmrcd2018】                     |                                                              |      |
 
 
 
@@ -18,8 +19,6 @@
 
 - MAP
 - MRR
-  - 是一个国际上通用的对搜索算法进行评价的机制，即第一个结果匹配，分数为1，第二个匹配分数为0.5，第n个匹配分数为1/n，如果没有匹配的句子分数为0
-  - 最终的分数为所有得分之和
 - NDCG
 - EM
 - F1
@@ -35,7 +34,6 @@
 | Open domain |      |      |
 
 
-
 | Solutions            |      |      |
 | -------------------- | ---- | ---- |
 | Search and Retrieval |      |      |
@@ -43,7 +41,6 @@
 | Semantic Parsing     |      |      |
 | Language Model       |      |      |
 | Generative           |      |      |
-
 
 
 # Paper List
@@ -62,7 +59,6 @@
 - [2018年　清华77篇机器阅读理解论文](http://www.zhuanzhi.ai/document/87418ceee95a21622d1d7a21f71a894a)
 - 2019 年　有待整理
 - [SQuAD 的一些模型](<http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be>)
-
 
 
 #  Project Structure
@@ -136,11 +132,14 @@
   - ranking
 - Unsupervised MRC 
 
-# Milestone
+# Plan
++ tensorflow 
+    + dureader squad squad2 
+    + multicard
 
+# Milestone
 + pass
 
 # Reference
-
 + pass
 

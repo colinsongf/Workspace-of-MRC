@@ -1,0 +1,1 @@
+#!/usr/bin/python3# -*- coding: utf-8 -*-# @Time    : 2019-07-02 15:12# @Author  : apollo2mars# @File    : squad2.py# @Contact : apollo2mars@gmail.com# @Desc    :

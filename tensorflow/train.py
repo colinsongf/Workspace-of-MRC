@@ -4,27 +4,30 @@
 import os,sys,argparse,logging
 import numpy as np
 import tensorflow as tf
-from datasets import DuDataset, SQuADDataset
-from models import dureader, squad
+from corpus.dureader import DuDataset
+from corpus.squad2 import SQuAD2Dataset
+from models import dureader, squad2, squad
 from metrics import bleu, rl
-from utils import 1, 2, 3
+from utils.data_utils import *
+
+from time import strftime, localtime
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
+
+
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
-        # tokenizer normal/bert/others
-        tokenizer = build_tokenizer(
-            fname=[opt.dataset['train'], opt.dataset['test']],
-            max_seq_len=opt.max_seq_len,
-            dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
-        # embedding normal/bert/others
-
-        # model init
-        self.model = opt.model_class(>>>emb, self.opt)
+        if 'bert' in opt.model:
+            tokenizer = build_tokenizer_bert(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+            bert =
+        else :
+            tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+            embedding = build_embedding_matrix(word2idx=tokenizer.word2idx, embed_dim=opt.emb_dim, dat_fname='{0}_{1}_embedding_matrix.dat'.format(str(opt.emb_dim), opt.dataset))
+            self.model = opt.model_class(embedding, self.opt)
 
         # dataset
         self.trainset = opt.dataset_class(opt.dataset_file['train', tokenizer])
@@ -105,34 +108,37 @@ class Instructor:
 
 def main():
     parser = argparse.ArgumentParser()
-    # dataset setting
-    parser = add_argument('--dataset_name', type=str, default = 'dureader')
-    # model setting
+    parser.add_argument('--model', type=str, default = 'bidaf')
+    parser.add_argument('--dataset', type=str, default = 'dureader')
+    parser.add_argument('--optimizer', type=str, default = 'dureader')
+    parser.add_argument('--initializer', type=str, default = 'dureader')
+    parser.add_argument('--learning_rate', type=float, default = 5e-5)
+    parser.add_argument('--epoch', type=int, default = 10)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--gpu', type=str, default='0')
+    parser.add_argument('--multi_gpu', type=str, default='0,1,2,3')
 
-    # optimizer setting
+    parser.add_argument('--pretrain_bert_name', type=str, default='chinese')
+    parser.add_argument('--emb_dim', type=int, default=300)
 
-    # hyper parameter setting
-
-    # 
-        
     args = parser.parse_args()
 
     dataset_files = {
         'squad1.1':{
-            'train':...,
-            'test':...}
+            'train':'',
+            'test':''},
         'squad2.0':{
-            'train':...,
-            'test':...}
+            'train':'corpus/squad2/train-v2.0.json',
+            'test':'corpus/squad2/dev-v2.0.json'},
         'dureader':{
-            'train':...,
-            'test':...}
+            'train':'',
+            'test':''},
         'marco':{
-            'train':...,
-            'test':...}
+            'train':'',
+            'test':''},
         'deepmin':{
-            'train':...,
-            'test':...}
+            'train':'',
+            'test':}
     }
 
     model_classes = {
@@ -142,10 +148,27 @@ def main():
         'bert_bidaf' : BERT_BIDAF
     }
 
-    input_clos = {
-        'bidaf' : ['text'],
-        'mlstm' : ['']
+    input_cols = {
+        'squad2.0' : ['text']
     }
+
+    optimizers = {
+        'adam':tf.train.AdamOptimizer
+    }
+
+    args.dataset = dataset_files[args.dataset]
+    args.model = model_classes[args.model]
+    args.input_cols = input_cols[args.input_cols]
+    args.optimizer = optimizers[args.optimizer]
+
+    log_file = './outputs/logs/{}-{}-{}.log'.format(args.dataset_file, args.model_class, strftime("%y%m%d-%H%M", localtime()))
+    logger.addHandler(logging.FileHandler(log_file))
+
+    ins = Instructor(args)
+    ins.run()
+
+if __name__ == '__main__':
+    main()
 
 
 
