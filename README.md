@@ -1,5 +1,15 @@
 [TOC]
 
+# Workspace of Machine Reading Comprehension
+
+# Target
+
++ Algorithms implementation of **M**achine **R**eading **C**omprehension 
++ Efficient and beautiful code
++ General Architecture for MRC
+    + Framework for multi-dataset and multi-card
+    + Framework for model ensemble
+
 # Dataset
 + Close Test
     + CNN Daily Mail
@@ -94,12 +104,6 @@
 | Multi-passage        |      |      |
 | Unanswerable         |      |      |
 
-
-# Paper List
-
-## Summary
-+ [Neural Machine Reading Comprehension: Methods and Trends ](https://arxiv.org/pdf/1907.01118.pdf)
-
 ## BIDAF
 
 ## Matching-LSTM
@@ -108,43 +112,13 @@
 
 ## Reading Wikipedia to Answer Open Domain Questions
 
-## Reference
+- <http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be>)
 
-- 2017年　以前的论文和数据集整理](https://www.zybuluo.com/ShawnNg/note/622592)
-- [2018年　清华77篇机器阅读理解论文](http://www.zhuanzhi.ai/document/87418ceee95a21622d1d7a21f71a894a)
-- 2019 年　有待整理
-- [SQuAD 的一些模型](<http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be>)
+# Training Settings
 
+# Chanllenge
 
-#  Project Structure
-
-## Process
-
-### Download the Dataset
-
-### Download Thirdparty Dependencies
-
-### Preprocess the Data
-
-## Run Tensorflow
-
-### Preparation
-
-### Training
-
-### Evaluation
-
-### Prediction
-
-## Run PyTorch
-
-## Run PaddlePaddle
-
-## Run Keras
-
-## Untils
-
-### Mulit Card Training
+# Problems
 
 # Open Issues
 - Pretrain Embedding and Fine tuning
@@ -194,14 +168,20 @@
 
 - KBMRC
 
-# Plan
-+ tensorflow 
-    + dureader squad squad2 
-    + multicard
-
 # Milestone
 + pass
 
+# Coding Standards
+
+- 大小写
+- 复数
+
 # Reference
-+ pass
+
+- Neural Machine Reading Comprehension: Methods and Trends 
+
+- 2017年　以前的论文和数据集整理](https://www.zybuluo.com/ShawnNg/note/622592)
+- [2018年　清华77篇机器阅读理解论文](http://www.zhuanzhi.ai/document/87418ceee95a21622d1d7a21f71a894a)
+- 2019 年　有待整理
+- [SQuAD 的一些模型](
 

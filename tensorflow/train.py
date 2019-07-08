@@ -2,6 +2,10 @@
 # author : apollo2mars@gmail.com
 
 import os,sys,argparse,logging
+from os import path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
+
 import numpy as np
 import tensorflow as tf
 from corpus.dureader import DuDataset
@@ -35,6 +39,7 @@ class Instructor:
         
     def _print_opts(self):
         pass
+
     def _reset_params(self):
         pass
 
