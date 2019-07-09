@@ -24,7 +24,7 @@ import numpy as np
 from collections import Counter
 
 
-class BRCDataset(object):
+class DuReaderDataset(object):
     """
     This module implements the APIs for loading and using baidu reading comprehension dataset
     """

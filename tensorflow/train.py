@@ -8,8 +8,8 @@ sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 
 import numpy as np
 import tensorflow as tf
-from corpus.dureader import DuDataset
-from corpus.squad2 import SQuAD2Dataset
+from utils.DatasetDuReader import DuReaderDataset
+from utils.DatasetSQuAD2 import
 from models import dureader, squad2, squad
 from metrics import bleu, rl
 from utils.data_utils import *
