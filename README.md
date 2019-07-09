@@ -11,40 +11,37 @@
     + Framework for model ensemble
 
 # Dataset
-+ Close Test
-    + CNN Daily Mail
-    + CBT
-    + CLOTH
-    + LAMBADA
-    + Who-did-What
-    + CliCR
-+ Multi Choice
-    + MCTest
-    + RACE
-+ Span Extraction
-    + SQuAD
-    + NewsQA
-    + TriviaQA
-    + DuoRC
-+ Free Answering
-    + bAbI
-    + MS MARCO
-    + SearchQA
-    + NarrativeQA
-    + DuReader
 
-| Dataset                                                      | SOTA                                                         | Tips |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)     | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |      |
-| [MARCO V2](http://www.msmarco.org/leaders.aspx)              | **Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |      |
-| [DuReader](http://ai.baidu.com/broad/subordinate?dataset=dureader) |                                                              |      |
-| LAMBADA                                                      |                                                              |      |
-| Who-did-What(WDW)                                            |                                                              |      |
-| CNN & DailyMail(close style)                                 |                                                              |      |
-| Children's Book Test BookTest                                |                                                              |      |
-| AI chanllenge 2018 观点型阅读理解数据集【https://challenger.ai/dataset/oqmrcd2018】                     |                                                              |      |
+| Close Type     | SOTA | Tips |
+| -------------- | ---- | ---- |
+| CNN/Daily Mail |      |      |
+| CBT            |      |      |
+| CLOTH          |      |      |
+| LAMBADA        |      |      |
+| Who-did-What   |      |      |
+| CliCR          |      |      |
 
+| Mulit Choice | SOTA | Tips |
+| ------------ | ---- | ---- |
+| MCTest       |      |      |
+| RACE         |      |      |
+|              |      |      |
 
+| Span Extraction                                          | SOTA                                                         | Tips |
+| -------------------------------------------------------- | ------------------------------------------------------------ | ---- |
+| SQuAD 1.1                                                |                                                              |      |
+| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/) | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |      |
+| NEWSQA                                                   |                                                              |      |
+| TriviaQA                                                 |                                                              |      |
+| DuoRC                                                    |                                                              |      |
+
+| Free Answer                                     | SOTA                                                         | Tips |
+| ----------------------------------------------- | ------------------------------------------------------------ | ---- |
+| bAbI                                            |                                                              |      |
+| [MARCO V2](http://www.msmarco.org/leaders.aspx) | Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |      |
+| SearchQA                                        |                                                              |      |
+| NarrativeQA                                     |                                                              |      |
+| DuReader                                        |                                                              |      |
 
 # Metric
 
@@ -94,29 +91,39 @@
 
 # Solutions
 
-| Solutions            |      |      |
-| -------------------- | ---- | ---- |
-| Search and Retrieval |      |      |
-| Knowledge based      |      |      |
-| Semantic Parsing     |      |      |
-| Language Model       |      |      |
-| Generative           |      |      |
-| Multi-passage        |      |      |
-| Unanswerable         |      |      |
+## Close Type
 
-## BIDAF
+| Model | Tips | Result |
+| ----- | ---- | ------ |
+|       |      |        |
+|       |      |        |
+|       |      |        |
 
-## Matching-LSTM
+## Mulit Choice
 
-## Hybird Attention-over-Attention Reader
+| Model | Tips | Result |
+| ----- | ---- | ------ |
+|       |      |        |
+|       |      |        |
+|       |      |        |
 
-## Reading Wikipedia to Answer Open Domain Questions
+## Span Extraction
 
-- <http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be>)
+| Model                                  | Tips | Result |
+| -------------------------------------- | ---- | ------ |
+| BIDAF                                  |      |        |
+| Matching-LSTM                          |      |        |
+| Hybird Attention-over-Attention Reader |      |        |
+
+## Free Answer
+
+| Model                                             | Tips                                                         | Result |
+| ------------------------------------------------- | ------------------------------------------------------------ | ------ |
+| Reading Wikipedia to Answer Open Domain Questions | http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be |        |
+|                                                   |                                                              |        |
+|                                                   |                                                              |        |
 
 # Training Settings
-
-# Chanllenge
 
 # Problems
 
