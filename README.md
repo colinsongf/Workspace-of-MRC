@@ -114,6 +114,7 @@
 | BIDAF                                  |      |        |
 | Matching-LSTM                          |      |        |
 | Hybird Attention-over-Attention Reader |      |        |
+| DrQA                                   |      |        |
 
 ## Free Answer
 

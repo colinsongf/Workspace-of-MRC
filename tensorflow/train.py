@@ -6,12 +6,9 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
-import numpy as np
 import tensorflow as tf
 from utils.DatasetDuReader import DuReaderDataset
-from utils.DatasetSQuAD2 import
-from models import dureader, squad2, squad
-from metrics import bleu, rl
+from utils.DatasetSQuAD2 import SQuAD2Dataset
 from utils.data_utils import *
 
 from time import strftime, localtime
