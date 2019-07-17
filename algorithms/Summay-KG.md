@@ -9,6 +9,16 @@
 	- https://zhuanlan.zhihu.com/p/35186608
 
 
+
+### Question Answering on Knowledge Bases and Text using Universal Schema and Memory Networks
+
+- 传统 QA 问题的解决方法是从知识库或者生文本中推测答案，本文将通用模式扩展到自然语言 QA 的应用当中，采用记忆网络来关注文本和 KB 相结合的大量事实。
+- 论文链接
+  - https://www.paperweekly.site/papers/1734
+- 代码链接
+  - https://github.com/rajarshd/TextKBQA
+
+
 # Solution 1 知识库相关方案 [1]
 + 知识库 :　Freebase, DBpedia, Wikipedia, yago, satori
 + 常见数据集

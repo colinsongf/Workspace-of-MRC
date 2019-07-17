@@ -1,11 +1,3 @@
-## Factoid QA
-
-- https://github.com/brmson/dataset-factoid-webquestions
-- http://www.cs.cmu.edu/~ark/QA-data/
-- https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/
-- Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus
-  - 将 KB 三元组转化为问句
-
 ## No Factoid QA
 
 - Natural Language Processing: What is "Non-factoid question answering"?
@@ -60,6 +52,7 @@
 - 源码 | https://github.com/nusnlp/amanda
 
 # 检索问答
+
 ### 检索式问答系统的语义匹配模型（神经网络篇）
 + https://zhuanlan.zhihu.com/p/26879507
 
@@ -135,13 +128,6 @@
 - 论文 | More Accurate Question Answering on Freebase
 - 链接 | https://www.paperweekly.site/papers/1356
 - 源码 | https://github.com/ad-freiburg/aqqu
-
-### Question Answering on Knowledge Bases and Text using Universal Schema and Memory Networks
-- 传统 QA 问题的解决方法是从知识库或者生文本中推测答案，本文将通用模式扩展到自然语言 QA 的应用当中，采用记忆网络来关注文本和 KB 相结合的大量事实。
-- 论文链接
-	- https://www.paperweekly.site/papers/1734
-- 代码链接
-	- https://github.com/rajarshd/TextKBQA
 
 
 ## Some Projects

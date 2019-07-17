@@ -43,6 +43,26 @@
 | NarrativeQA                                     |                                                              |      |
 | DuReader                                        |                                                              |      |
 
+| Factoid QA                                                   | SOTA | Tips                                                         |
+| ------------------------------------------------------------ | ---- | ------------------------------------------------------------ |
+| https://github.com/brmson/dataset-factoid-webquestions http://www.cs.cmu.edu/~ark/QA-data |      |                                                              |
+| [https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/](https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/) |      | Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus  将 KB 三元组转化为问句 |
+|                                                              |      |                                                              |
+
+| Retrieval QA | SOTA | Tips |
+| ------------ | ---- | ---- |
+|              |      |      |
+|              |      |      |
+|              |      |      |
+
+| KBQA | SOTA | Tips |
+| ---- | ---- | ---- |
+|      |      |      |
+|      |      |      |
+|      |      |      |
+
+
+
 # Metric
 
 - MAP
@@ -91,38 +111,51 @@
 
 # Solutions
 
-## Close Type
+| Close Type | Tips |
+| ---------- | ---- |
+|            |      |
+|            |      |
+|            |      |
 
-| Model | Tips | Result |
-| ----- | ---- | ------ |
-|       |      |        |
-|       |      |        |
-|       |      |        |
+| Multi Choice | Tips |
+| ------------ | ---- |
+|              |      |
+|              |      |
+|              |      |
 
-## Mulit Choice
+| Span Extraction                        | Tips |
+| -------------------------------------- | ---- |
+| BIDAF                                  |      |
+| Matching-LSTM                          |      |
+| Hybird Attention-over-Attention Reader |      |
+| DrQA                                   |      |
+| QANet                                  |      |
 
-| Model | Tips | Result |
-| ----- | ---- | ------ |
-|       |      |        |
-|       |      |        |
-|       |      |        |
+| Free Answer                                       | Tips                                                         |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| Reading Wikipedia to Answer Open Domain Questions | http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be |
+|                                                   |                                                              |
+|                                                   |                                                              |
 
-## Span Extraction
+| Factoid QA | Tips |
+| ---------- | ---- |
+|            |      |
+|            |      |
+|            |      |
 
-| Model                                  | Tips | Result |
-| -------------------------------------- | ---- | ------ |
-| BIDAF                                  |      |        |
-| Matching-LSTM                          |      |        |
-| Hybird Attention-over-Attention Reader |      |        |
-| DrQA                                   |      |        |
+| Retrieval QA | Tips |
+| ------------ | ---- |
+|              |      |
+|              |      |
+|              |      |
 
-## Free Answer
+| KBQA | Tips |
+| ---- | ---- |
+|      |      |
+|      |      |
+|      |      |
 
-| Model                                             | Tips                                                         | Result |
-| ------------------------------------------------- | ------------------------------------------------------------ | ------ |
-| Reading Wikipedia to Answer Open Domain Questions | http://www.zhuanzhi.ai/document/d6a0038bb0143a6805370adb58bf68be |        |
-|                                                   |                                                              |        |
-|                                                   |                                                              |        |
+
 
 # Training Settings
 
