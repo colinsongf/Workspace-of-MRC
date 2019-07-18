@@ -1,6 +1,7 @@
 # Reading Wikipedia to Answer Open-Domain Quesitons
 
 ## Abstract
+
 + This paper proposes to tackle open-domain question answering using Wikipedia as the unique knowledge source: the answer to any factoid question is a text span in a Wikipedia article.(问题的答案是维基百科中文本按照一定跨度截取)
 + This task of machine reading at scale combines the challenges of document re-trieval (finding the relevant articles) with that of machine comprehension of text (identifying the answer spans from those articles)
 	+ 大规模机器阅读的任务将文件重新找到（找到相关文章）和机器理解文本（识别这些文章的答案）的挑战相结合

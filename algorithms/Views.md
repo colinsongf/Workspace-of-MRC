@@ -1,13 +1,29 @@
+
+
+- [6] FastQA 论文笔记
+
+  - http://www.shuang0420.com/2018/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Making%20Neural%20QA%20as%20Simple%20as%20Possible%20but%20not%20Simpler/
+
+- [7] 《Fast and Accurate Reading Comprehension by Combining Self-attention and Convolution》阅读笔记
+
+  - https://zhuanlan.zhihu.com/p/35186608
+
+  ### Question Answering on Knowledge Bases and Text using Universal Schema and Memory Networks
+
+  - 传统 QA 问题的解决方法是从知识库或者生文本中推测答案，本文将通用模式扩展到自然语言 QA 的应用当中，采用记忆网络来关注文本和 KB 相结合的大量事实。
+  - 论文链接
+    - https://www.paperweekly.site/papers/1734
+  - 代码链接
+    - https://github.com/rajarshd/TextKBQA
+
+
+
 ## No Factoid QA
 
 - Natural Language Processing: What is "Non-factoid question answering"?
   - A non-factoid question answering (QA) is an umbrella term that covers all question-answering topics beyond factoid question answering. As a quick reminder: a factoid QA is about providing concise facts. For example, "who is the headmaster of Hogwarts?", "What is the population of Mars", and so on, so forth.
   - In constrast, a non-factoid question can be about anything. You can be asked to provide an answer to a math problem, to explain how to fix a specific model of a car, and so on, so forth. Answering multiple-choice questions also belongs to the area of non-factoid QA, though, there might be some overlap with factoid QA in this task.
   - An important sub-problem of non-factoid QA consists in finding already existing  answers posted on community question answering sites such as Quora! This is very much an IR task.
-
-### ACL 2018 | 北大与百度提出多文章验证方法：让机器验证阅读理解候选答案
-
-+ https://zhuanlan.zhihu.com/p/36925804
 
 #### 基于知识的智能问答技术　冯岩松
 #### 基于深度学习的阅读理解　冯岩松
@@ -20,26 +36,6 @@
 + 链接 | https://www.paperweekly.site/papers/835
 + 作者 | Dirk Weissenborn / Georg Wiese / Laura Seiffe
 + 阅读理解系列的框架很多大同小异，但这篇 paper 真心觉得精彩，虽然并不是最新最 state-of-art。
-
-### GDAN
-- 论文 | Semi-Supervised QA with Generative Domain-Adaptive Nets
-- 链接 | https://www.paperweekly.site/papers/576
-- 作者 | Zhilin Yang / Junjie Hu / Ruslan Salakhutdinov / William W. Cohen
-- GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。
-
-### QANet
-- 论文 | QANet - Combining Local Convolution with Global Self-Attention for Reading Comprehension
-- 链接 | https://www.paperweekly.site/papers/1901
-- 源码 | https://github.com/NLPLearn/QANet
-- **CMU 和 Google Brain 新出的文章，SQuAD 目前的并列第一，两大特点： **
-	- 1. 模型方面创新的用 CNN+attention 来完成阅读理解任务。
-		- 在编码层放弃了 RNN，只采用 CNN 和 self-attention。CNN 捕捉文本的局部结构信息（ local interactions），self-attention 捕捉全局关系（ global interactions），在没有牺牲准确率的情况下，加速了训练（训练速度提升了 3x-13x，预测速度提升 4x-9x）。
-
-
-	- 2. 数据增强方面通过神经翻译模型（把英语翻译成外语（德语/法语）再翻译回英语）的方式来扩充训练语料，增加文本多样性。
-		- 其实目前多数 NLP 的任务都可以用 word vector + RNN + attention 的结构来取得不错的效果，虽然我挺偏好 CNN 并坚定相信 CNN 在 NLP 中的作用（捕捉局部相关性&方便并行），但多数情况下也是跟着主流走并没有完全舍弃过 RNN，这篇论文还是给了我们很多想象空间的。
-
-
 
 
 

@@ -1,10 +1,13 @@
+
+
+[TOC]
+
+
+
 # Summary of Retrieval Reading Comprehension System
 
-### Reference
-- 检索式问答系统的语义匹配模型
-	- https://zhuanlan.zhihu.com/p/26879507
+# 检索式问答系统的语义匹配模型
 
-### 检索式问答系统的语义匹配模型
 + https://zhuanlan.zhihu.com/p/26879507
 + 实现方式
 	+ 问答系统可以基于规则实现
@@ -17,7 +20,8 @@
 	+ 3）matching 和 ranking 模型对候选列表做 rerank 并返回 top K。
 + NN 实现语义匹配的典型工作
 
-##### 1. Po-Sen Huang, et al., 2013, Learning Deep Structured Semantic Models for Web Search using Clickthrough Data
+## 1. Po-Sen Huang, et al., 2013, Learning Deep Structured Semantic Models for Web Search using Clickthrough Data
+
 + 相似性问题： 计算 Quary 和 Doc 的相似性
 + **这篇博客讲的很好： https://cloud.tencent.com/developer/article/1005600**
 + From UIUC 和 Microsoft Research
@@ -36,7 +40,8 @@
 	+ 计算(D, Q)的 cosinesimilarity 后
 	+ 用 softmax 做归一化得到的概率值是整个模型的最终输出，该值作为监督信号进行有监督训练
 
-##### 2. Yelong Shen, et al, 2014, A Latent Semantic Model with Convolutional-Pooling Structure for Information Retrieval
+## 2. Yelong Shen, et al, 2014, A Latent Semantic Model with Convolutional-Pooling Structure for Information Retrieval
+
 + 这篇文章出自 Microsoft Research，是对上述 DSSM 模型的改进工作
 + 在 DSSM 模型中，输入层是文本的 bag-of-words 向量，**丢失词序特征，无法捕捉前后词的上下文信息**
 + 基于此，本文提出一种基于卷积的隐语义模型（convolutional latent semantic model, CLSM）
@@ -55,7 +60,8 @@
 	+ NDCG@N 指标表明，CLSM 模型在语义匹配上达到了新的 SOTA 水平
 	+ 文中的实验和结果分析详细且清晰，很赞的工作
 
-##### 3. Zhengdong Lu & Hang Li, 2013, A Deep Architecture for Matching Short Texts
+## 3. Zhengdong Lu & Hang Li, 2013, A Deep Architecture for Matching Short Texts
+
 + From : 这篇文章出自华为诺亚方舟实验室
 + Scenario : 针对短文本匹配问题
 + 提出一个被称为 DeepMatch 的神经网络语义匹配模型
@@ -63,7 +69,8 @@
 	+ 1）Localness，也即，两个语义相关的文本应该存在词级别的共现模式（co-ouccurence pattern of words）；
 	+ 2）Hierarchy，也即，共现模式可能在不同的词抽象层次中出现。
 
-##### 4. Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation
+## 4. Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation
+
 + From : 这篇文章出自华为诺亚方舟实验室
 + Scenario : 针对的问题是基于检索的短文本对话，但也可以看做是基于**检索的问答系统**
 + Step:
@@ -77,7 +84,8 @@
 		+ 6）Topic-Word Model；
 			+ 7）其它匹配特征。
 
-##### 5. Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences
+## 5. Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences
+
 + From : 华为诺亚方舟实验室
 + 采用 CNN 模型来解决语义匹配问题，文中提出 2 种网络架构，分别为 ARC-I 和 ARC-II
 + ARC-I
@@ -91,7 +99,8 @@
 + ARC-II
 	+ (to be continued)
 
-##### 6. Lei Yu, et al., 2014, Deep Learning for Answer Sentence Selection
+## 6. Lei Yu, et al., 2014, Deep Learning for Answer Sentence Selection
+
 + From : University of Oxford 和 DeepMind
 + 提出基于 unigram 和 bigram 的语义匹配模型
 + Step :
@@ -108,8 +117,10 @@
 	![](https://pic3.zhimg.com/80/v2-cd4c9f238689d0412754b3761b84a6af_hd.jpg)
 + 文中用 TREC QA 数据集测试了提出的 2 个模型，实验结果的 MAP 和 MRR 指标表明，unigram 和 bigram 模型都有不错的语义匹配效果，其中 bigram 模型要优于 unigram 模型。
 + 特别地，在语义向量基础上融入 idf-weighted word co-occurence count 特征后，语义匹配效果会得到明显提升。文中还将提出的 unigram 和 bigram 模型与几个已有模型进行了效果对比，结果表明在同样的数据集上，融入共现词特征的 bigram 模型达到了 SOTA 的效果。
-##### 7. Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks
-##### 8. Ryan Lowe, et al., 2016, The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems
+## 7. Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks
+
+## 8. Ryan Lowe, et al., 2016, The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems
+
 + From : McGill 和 Montreal 两所大学
 + Scenario : 针对基于检索的多轮对话问题，提出了 **dual-encoder** 模型对 context 和 response 进行语义表示，该思路也可用于检索式问答系统
 + Structure :
@@ -120,4 +131,11 @@
 	+ 相似度得分作为监督信号在标注数据集上训练模型。
 		+ 文中在 Ubuntu 对话语料库上的实验结果表明，dual-encoder 模型在捕捉文本语义相似度上的效果相当不错。
 
-##### 从上面 8 篇论文可知，与关键词匹配（如 TF-IDF 和 BM25）和浅层语义匹配（如隐语义模型，词向量直接累加构造的句向量）相比，基于深度学习的文本语义匹配模型在问答系统的匹配效果上有明显提升。
+## 从上面 8 篇论文可知，与关键词匹配（如 TF-IDF 和 BM25）和浅层语义匹配（如隐语义模型，词向量直接累加构造的句向量）相比，基于深度学习的文本语义匹配模型在问答系统的匹配效果上有明显提升。
+
+
+
+# Reference
+
+- 检索式问答系统的语义匹配模型
+  - https://zhuanlan.zhihu.com/p/26879507

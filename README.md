@@ -55,11 +55,18 @@
 |              |      |      |
 |              |      |      |
 
-| KBQA | SOTA | Tips |
-| ---- | ---- | ---- |
-|      |      |      |
-|      |      |      |
-|      |      |      |
+| KBQA                                                 | SOTA | Tips |
+| ---------------------------------------------------- | ---- | ---- |
+| 知识库 :　Freebase, DBpedia, Wikipedia, yago, satori |      |      |
+| ATIS                                                 |      |      |
+| GeoQuery                                             |      |      |
+| QALD Series                                          |      |      |
+| Free 917                                             |      |      |
+| Web Questions                                        |      |      |
+| Web QuestionsSP                                      |      |      |
+| SimpleQuestions                                      |      |      |
+| WikiMovies                                           |      |      |
+| TriviaQA                                             |      |      |
 
 
 
