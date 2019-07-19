@@ -12,28 +12,25 @@
 
 # Dataset
 
-| Close Type     | SOTA | Tips |
-| -------------- | ---- | ---- |
-| CNN/Daily Mail |      |      |
-| CBT            |      |      |
-| CLOTH          |      |      |
-| LAMBADA        |      |      |
-| Who-did-What   |      |      |
-| CliCR          |      |      |
-
-| Mulit Choice | SOTA | Tips |
-| ------------ | ---- | ---- |
-| MCTest       |      |      |
-| RACE         |      |      |
-|              |      |      |
-
-| Span Extraction                                          | SOTA                                                         | Tips |
-| -------------------------------------------------------- | ------------------------------------------------------------ | ---- |
-| SQuAD 1.1                                                |                                                              |      |
-| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/) | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |      |
-| NEWSQA                                                   |                                                              |      |
-| TriviaQA                                                 |                                                              |      |
-| DuoRC                                                    |                                                              |      |
+| Dataset                                                  | Lang | Query | Doc   | query source    | doc source   | Answer                 | SOTA                                                         |
+| -------------------------------------------------------- | ---- | ----- | ----- | --------------- | ------------ | ---------------------- | ------------------------------------------------------------ |
+| CNN/Daily Mail                                           | ENG  | 1.4M  | 300K  | Close           | News         | Fill in entity         |                                                              |
+| CBT                                                      |      |       |       |                 |              |                        |                                                              |
+| CLOTH                                                    |      |       |       |                 |              |                        |                                                              |
+| LAMBADA                                                  |      |       |       |                 |              |                        |                                                              |
+| Who-did-What                                             |      |       |       |                 |              |                        |                                                              |
+| CliCR                                                    |      |       |       |                 |              |                        |                                                              |
+| HLF-RC                                                   | CHN  | 100K  | 28K   | Close           | Fairy/news   | Fill in word           |                                                              |
+| RACE                                                     | ENG  | 870K  | 50K   | english exam    | english exam | Multi choice           |                                                              |
+| MCTest                                                   |      |       |       |                 |              | Multi choice           |                                                              |
+| SQuAD 1                                                  | ENG  | 100K  | 536   |                 |              | Span                   | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |
+| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/) |      |       |       |                 |              | Span                   |                                                              |
+| NEWSQA                                                   |      |       |       |                 |              | span                   |                                                              |
+| TriviaQA                                                 | ENG  | 40K   | 660K  | Trivia websites | Wiki/Web doc | Span/substring of word |                                                              |
+| DuoRC                                                    |      |       |       |                 |              | Span                   |                                                              |
+| MS-MARCO                                                 | ENG  | 100K  | 200K  | User Logs       | Web doc      | Summary by human       |                                                              |
+| DuReader                                                 | ENG  | 200K  | 1000K | User Logs       | Web doc/CQA  | Summary  by human      |                                                              |
+|                                                          |      |       |       |                 |              |                        |                                                              |
 
 | Free Answer                                     | SOTA                                                         | Tips |
 | ----------------------------------------------- | ------------------------------------------------------------ | ---- |
@@ -232,9 +229,9 @@
 # Reference
 
 - Neural Machine Reading Comprehension: Methods and Trends 
-
 - 2017年　以前的论文和数据集整理](https://www.zybuluo.com/ShawnNg/note/622592)
 - [2018年　清华77篇机器阅读理解论文](http://www.zhuanzhi.ai/document/87418ceee95a21622d1d7a21f71a894a)
 - 2019 年　有待整理
 - [SQuAD 的一些模型]
+- DuReader ：https://zhuanlan.zhihu.com/p/36415104
 
