@@ -1,3 +1,4 @@
+corpus/
 result*
 venv*/
 *.pyc
