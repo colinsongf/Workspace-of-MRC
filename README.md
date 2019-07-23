@@ -65,6 +65,12 @@
 | WikiMovies                                           |      |      |
 | TriviaQA                                             |      |      |
 
+| RRC                                  | SOTA | Tips                                                         |
+| ------------------------------------ | ---- | ------------------------------------------------------------ |
+| https://arxiv.org/pdf/1904.02232.pdf |      | this paper explores the potential of turning customer reviews into a large source of knowledge that can be exploited to answer user questions |
+|                                      |      |                                                              |
+|                                      |      |                                                              |
+
 
 
 # Metric
