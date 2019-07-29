@@ -59,14 +59,14 @@ class DuReaderDataset(object):
                 sample['passages'] = []
                 for d_idx, doc in enumerate(sample['documents']):  # 遍历正文的所有自然段
                     if train:
-                        most_related_para = doc['most_related_para']   # 训练的时候 只使用了 最相关的自然段 分词之后的结果
+                        most_related_para = doc['most_related_para']  # 训练的时候 只使用了 最相关的自然段 分词之后的结果
                         sample['passages'].append(
                             {'passage_tokens': doc['segmented_paragraphs'][most_related_para],
                              'is_selected': doc['is_selected']}
                         )
                     else:  # 结果计算
                         para_infos = []  # 记录各个para 的结果
-                        for para_tokens in doc['segmented_paragraphs']:   ## 所有的paragraphs 的 segmented 结果 [[token list of para1], [token list of para2], [token list of para3]]
+                        for para_tokens in doc['segmented_paragraphs']:   # 所有的paragraphs 的 segmented 结果 [[token list of para1], [token list of para2], [token list of para3]]
                             question_tokens = sample['segmented_question']
                             common_with_question = Counter(para_tokens) & Counter(question_tokens)
                             correct_preds = sum(common_with_question.values())  # 统计相同的词
