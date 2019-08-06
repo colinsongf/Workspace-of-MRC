@@ -32,6 +32,16 @@
 | DuReader                                                 | ENG  | 200K  | 1000K | User Logs       | Web doc/CQA  | Summary  by human      |                                                              |
 |                                                          |      |       |       |                 |              |                        |                                                              |
 
+
+
+| Mulit Choice QA            |                                                              |      |
+| -------------------------- | ------------------------------------------------------------ | ---- |
+| Looking Beyond the surface | 多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 |      |
+|                            |                                                              |      |
+|                            |                                                              |      |
+
+
+
 | Free Answer                                     | SOTA                                                         | Tips |
 | ----------------------------------------------- | ------------------------------------------------------------ | ---- |
 | bAbI                                            |                                                              |      |
@@ -167,8 +177,6 @@
 
 
 
-# Training Settings
-
 # Problems
 
 # Open Issues
@@ -223,11 +231,6 @@
 # Milestone
 + pass
 
-# Coding Standards
-
-- 大小写
-- 复数
-
 # Usages
 
 + Will be used in “Workspace of Conversation-AI
@@ -240,10 +243,6 @@
 - 2019 年　有待整理
 - [SQuAD 的一些模型]
 - DuReader ：https://zhuanlan.zhihu.com/p/36415104
-
-
-
-======
 
 # Question Answering
 
