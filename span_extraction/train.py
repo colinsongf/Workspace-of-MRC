@@ -1,17 +1,18 @@
 # coding:utf-8
 # author : apollo2mars@gmail.com
 
-import os,sys,argparse,logging
+import sys,argparse,logging
 from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 import tensorflow as tf
+from utils.Tokenizer import build_tokenizer
 from utils.DatasetDuReader import DuReaderDataset
 from utils.DatasetSQuAD2 import SQuAD2Dataset
-from utils.data_utils import *
 
 from time import strftime, localtime
+from span_extraction.models import BIDAF
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -22,17 +23,14 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
-        if 'bert' in opt.model:
-            tokenizer = build_tokenizer_bert(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
-            bert =
-        else :
-            tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
-            embedding = build_embedding_matrix(word2idx=tokenizer.word2idx, embed_dim=opt.emb_dim, dat_fname='{0}_{1}_embedding_matrix.dat'.format(str(opt.emb_dim), opt.dataset))
-            self.model = opt.model_class(embedding, self.opt)
+        tokenizer = build_tokenizer_bert(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+        tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+        embedding = build_embedding_matrix(word2idx=tokenizer.word2idx, embed_dim=opt.emb_dim, dat_fname='{0}_{1}_embedding_matrix.dat'.format(str(opt.emb_dim), opt.dataset))
+        self.model = opt.model_class(embedding, self.opt)
 
         # dataset
-        self.trainset = opt.dataset_class(opt.dataset_file['train', tokenizer])
-        self.trainset = opt.dataset_class(opt.dataset_file['test', tokenizer])
+        self.trainset = opt.dataset_class(opt.dataset['train'], tokenizer)
+        self.trainset = opt.dataset_class(opt.dataset['test'], tokenizer)
         
     def _print_opts(self):
         pass
