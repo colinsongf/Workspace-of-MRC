@@ -7,7 +7,8 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 import tensorflow as tf
-from utils.Tokenizer import build_tokenizer
+import pickle
+from utils.Tokenizer import Tokenizer
 from utils.DatasetDuReader import DuReaderDataset
 from utils.DatasetSQuAD2 import SQuAD2Dataset
 
@@ -19,12 +20,31 @@ logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
+def _build_tokenizer(fnames, max_seq_len, dat_fname):
+    if os.path.exists(dat_fname):
+        print('loading tokenizer:', dat_fname)
+        tokenizer = pickle.load(open(dat_fname, 'rb'))
+    else:
+        text = ''
+        for fname in fnames:
+            fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
+            lines = fin.readlines()
+            fin.close()
+            for i in range(0, len(lines), 3):
+                text_raw = lines[i].lower().strip()
+                text += text_raw + " "
+
+        tokenizer = Tokenizer(max_seq_len)
+        tokenizer.fit_on_text(text)
+        pickle.dump(tokenizer, open(dat_fname, 'wb'))
+    return tokenizer
+
 
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
-        tokenizer = build_tokenizer_bert(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
-        tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+        # tokenizer = build_tokenizer_bert(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+        tokenizer = _build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
         embedding = build_embedding_matrix(word2idx=tokenizer.word2idx, embed_dim=opt.emb_dim, dat_fname='{0}_{1}_embedding_matrix.dat'.format(str(opt.emb_dim), opt.dataset))
         self.model = opt.model_class(embedding, self.opt)
 

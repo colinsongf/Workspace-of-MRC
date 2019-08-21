@@ -246,6 +246,30 @@
 
 # Question Answering
 
+### BERT-KBQA
+
++ https://github.com/jkszw2014/bert-kbqa-NLPCC2017
++ https://github.com/jkszw2014/bert-kbqa-NLPCC2017/tree/master/NER_BERT-BiLSTM-CRF
+
++ NLPCC2017的**Task5：Open Domain Question Answering**
+
++ 【1】基于该数据集实现的论文  http://www.doc88.com/p-9095635489643.html
+
+  【2】 NLPCC比赛数据集下载页面
+
+            http://tcci.ccf.org.cn/conference/2017/taskdata.php   
+      
+            http://tcci.ccf.org.cn/conference/2016/pages/page05_evadata.html 
+
+  【3】InsunKBQA_一个基于知识库的问答系统_周博通_孙承杰_林磊_刘秉权  http://www.doc88.com/p-9095635489643.html
+
+  【4】 基于知识库的问答：seq2seq模型实践  https://zhuanlan.zhihu.com/p/34585912
+
+  【5】基于BERT预训练的中文命名实体识别TensorFlow实现   https://blog.csdn.net/macanv/article/details/85684284
+  ------------------------------------------------
+  版权声明：本文为CSDN博主「ai_1046067944」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。
+  原文链接：https://blog.csdn.net/ai_1046067944/article/details/86707784
+
 ### Reference
 
 + 阅读理解与问答数据集 https://zhuanlan.zhihu.com/p/30308726
