@@ -36,40 +36,63 @@ class Tokenizer(object):
 
 		self.get_vocabulary()
 
+	@staticmethod
+	def _pad_and_truncate(sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
+		x = (np.ones(maxlen) * value).astype(dtype)
 
-	def _load_word_vec(self, input_path, word2idx=None):
+		if truncating == 'pre':
+			trunc = sequence[-maxlen:]
+		else:
+			trunc = sequence[:maxlen]
+			trunc = np.asarray(trunc, dtype=dtype)
+		if padding == 'post':
+			x[:len(trunc)] = trunc
+		else:
+			x[-len(trunc):] = trunc
+		return x
+
+	@staticmethod
+	def _load_word_vec(input_path, word2idx=None):
+		"""
+		Read
+
+		:param input_path:
+		:param word2idx:
+		:return:
+		"""
 		fin = open(input_path, 'r', encoding='utf-8', newline='\n', errors='ignore')
 		word_vec = {}
 		for line in fin:
 			tokens = line.rstrip().split(' ')
 			if word2idx is None or tokens[0] in word2idx.keys():
 				word_vec[tokens[0]] = np.asarray(tokens[1:], dtype='float32')
+
 			return word_vec
 
-    def fit_on_teixt(self, text):
-        if self.lower:
-            text = text.lower()
+	def fit_on_teixt(self, text):
+		if self.lower:
+			text = text.lower()
 
-        from collections import Counter
-        count = Counter(text)
+		from collections import Counter
+		count = Counter(text)
 
-        for idx, item in enumerate(count):
-            self.word2idx[item] = idx + 1 # must + 1
-            self.idx2word[idx + 1] = item
+		for idx, item in enumerate(count):
+			self.word2idx[item] = idx + 1 # must + 1
+			# self.idx2word[idx + 1] = item
 
-    def text_to_sequence(self, text, reverse=False, padding='post', truncating='post'):
-        if self.lower:
-            text = text.lower()
-        words = list(text)
-        unknownidx = len(self.word2idx)+1
-        sequence = [self.word2idx[w] if w in self.word2idx else unknownidx for w in words]
-        
-        if len(sequence) == 0:
-            sequence = [0]
-        if reverse:
-            sequence = sequence[::-1]
-        
-        return _pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
+	def text_to_sequence(self, text, reverse=False, padding='post', truncating='post'):
+		if self.lower:
+			text = text.lower()
+		words = list(text)
+		unknownidx = len(self.word2idx)+1
+		sequence = [self.word2idx[w] if w in self.word2idx else unknownidx for w in words]
+
+		if len(sequence) == 0:
+			sequence = [0]
+		if reverse:
+			sequence = sequence[::-1]
+
+		return _pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
 
 	def build_static_embedding_matrix(word2idx, embed_dim, dat_fname, fname):
 		if os.path.exists(dat_fname):
@@ -86,18 +109,8 @@ class Tokenizer(object):
 	def build_dynamic_embedding():
 		pass
 
-	def _pad_and_truncate(sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
-		x = (np.ones(maxlen) * value).astype(dtype)
 
-	if truncating == 'pre':
-		trunc = sequence[-maxlen:]
-	else:
-		trunc = sequence[:maxlen]
-	trunc = np.asarray(trunc, dtype=dtype)
-	if padding == 'post':
-		x[:len(trunc)] = trunc
-	else:
-		x[-len(trunc):] = trunc
-	return x
+
+
 
 

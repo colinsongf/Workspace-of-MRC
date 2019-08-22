@@ -30,7 +30,7 @@
 | DuoRC                                                    |      |       |       |                 |              | Span                   |                                                              |
 | MS-MARCO                                                 | ENG  | 100K  | 200K  | User Logs       | Web doc      | Summary by human       | MARCO 提供多篇来自搜索结果的网页文档，系统需要通过阅读这些文档来回答用户提出的问题。但是，文档中是否含有答案，以及答案具体在哪一篇文档中，都需要系统自己来判断解决。更有趣的是，有一部分问题无法在文档中直接找到答案，需要阅读理解模型自己做出判断；MARCO 也不限制答案必须是文档中的片段，很多问题的答案必须经过多篇文档综合提炼得到 |
 | DuReader                                                 | ENG  | 200K  | 1000K | User Logs       | Web doc/CQA  | Summary  by human      |                                                              |
-|                                                          |      |       |       |                 |              |                        |                                                              |
+| MRQA2019                                                 |      |       |       |                 |              |                        |                                                              |
 
 
 
