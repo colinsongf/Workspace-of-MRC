@@ -6,17 +6,6 @@ import os
 import pickle
 import numpy as np
 
-embedding_files = {
-	'Static':{
-		"Word2Vec":"",
-		"Glove":"",
-		"Tencent":""},
-	'Dynamic':{
-		"BERT":"",
-		"ELMo":""}
-}
-
-
 class Tokenizer(object):
 	""" Tokenizer for Machine Reading Comprehension
 
@@ -27,17 +16,47 @@ class Tokenizer(object):
 		else build new embedding matrix
 	"""
 
-	def __init__(self, max_seq_len, lower=True, emb_type="tencent", ):
+	def __init__(self, max_seq_len, lower=True, emb_type="tencent"):
 		self.lower = lower
 		self.max_seq_len = max_seq_len
 		self.emb_type = emb_type
 		self.word2idx = {}
 		self.idx2word = {}
 
-		self.get_vocabulary()
+        slef.embedding_info = self.__embedding_info()
+
+        self.embedding_matrix = self.__load_embedding_matrix()
+		self.__get_vocabulary_word_list()
+		self.__get_vocabulary_embeeding_vector_list()
+
+    def __embedding_info(self):
+        embedding_files = {
+            'Static':{
+                "Word2Vec":"",
+                "Glove":"",
+                "Tencent":""},
+            'Dynamic':{
+                "BERT":"",
+                "ELMo":"",
+                "ERINE":"",
+                "GPT-2-Chinese":""
+                "BERT-WWW":""}
+        }
+
+	def __load_embedding_matrix(self, word2idx, embed_dim, dat_fname, fname):
+		if os.path.exists(dat_fname):
+			embedding_matrix = pickle.load(open(dat_fname, 'rb'))
+		else:
+			embedding_matrix = np.zeros((len(word2idx) + 2, embed_dim))  # idx 0 and len(word2idx)+1 are all-zeros
+			word_vec = _load_word_vec(fname, word2idx=word2idx)
+			for word, i in word2idx.items():
+				embedding_matrix[i] = word_vec[word]
+			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
+
+		return embedding_matrix
 
 	@staticmethod
-	def _pad_and_truncate(sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
+	def __pad_and_truncate(self, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
 		x = (np.ones(maxlen) * value).astype(dtype)
 
 		if truncating == 'pre':
@@ -50,15 +69,42 @@ class Tokenizer(object):
 		else:
 			x[-len(trunc):] = trunc
 		return x
+    
+	def __get_vocabulary_word_list(self, text):
+        """
+        :param text: text for generate vocabulary
+        :return: null
+        """
+		if self.lower:
+			text = text.lower()
 
-	@staticmethod
-	def _load_word_vec(input_path, word2idx=None):
+		from collections import Counter
+		count = Counter(text)
+
+		for idx, item in enumerate(count):
+			self.word2idx[item] = idx + 1 # must + 1
+			self.idx2word[idx + 1] = item
+
+	def __get_vocabulry_embedding_vator_list(input_path, word2idx=None):
 		"""
-		Read
+		:param input_path: staic embedding file, for example("Glove.5b.300d")
+                , [0.2,0.6,..,0.2]
+                Apple [0.3,0.3,..,0.7]
+                Bob [0.3,0.4,..,0.7]
+                Car [0.5,0.4,..,0.7]
+                Do [0.8,0.4,..,0.7]
+                Eat [0.9,0.4,..,0.7]
+                ...
+                Zip [0.3,0.6,..,0.7]
+		:param word2idx: vocabulary for current task  [list]
+                input file : Bob Eat Apple
+                [Apple, Eat, Apple]
+		:return: embedding vector list for vocabury
+                [[0.3,0.4,..,0.7]
+                [0.9,0.4,..,0.7]
+                [0.3,0.3,..,0.7]]
 
-		:param input_path:
-		:param word2idx:
-		:return:
+        get embeddding vector list from embedding matrix by vovabulary
 		"""
 		fin = open(input_path, 'r', encoding='utf-8', newline='\n', errors='ignore')
 		word_vec = {}
@@ -69,48 +115,27 @@ class Tokenizer(object):
 
 			return word_vec
 
-	def fit_on_teixt(self, text):
-		if self.lower:
-			text = text.lower()
-
-		from collections import Counter
-		count = Counter(text)
-
-		for idx, item in enumerate(count):
-			self.word2idx[item] = idx + 1 # must + 1
-			# self.idx2word[idx + 1] = item
-
-	def text_to_sequence(self, text, reverse=False, padding='post', truncating='post'):
+	def encode(self, text, reverse=False, padding='post', truncating='post'):
+        """
+        convert text to numberical gigital features with max length, paddding
+        and truncating
+        """
 		if self.lower:
 			text = text.lower()
 		words = list(text)
 		unknownidx = len(self.word2idx)+1
 		sequence = [self.word2idx[w] if w in self.word2idx else unknownidx for w in words]
-
-		if len(sequence) == 0:
+        if len(sequence) == 0:
 			sequence = [0]
 		if reverse:
 			sequence = sequence[::-1]
 
 		return _pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
 
-	def build_static_embedding_matrix(word2idx, embed_dim, dat_fname, fname):
-		if os.path.exists(dat_fname):
-			embedding_matrix = pickle.load(open(dat_fname, 'rb'))
-		else:
-			embedding_matrix = np.zeros((len(word2idx) + 2, embed_dim))  # idx 0 and len(word2idx)+1 are all-zeros
-			word_vec = _load_word_vec(fname, word2idx=word2idx)
-			for word, i in word2idx.items():
-				embedding_matrix[i] = word_vec[word]
-			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
 
-		return embedding_matrix
+if __name__ == '__main__':
+    tokenizer = Tokenizer(512, emb_type='tencent')
 
-	def build_dynamic_embedding():
-		pass
+    text = "中文自然语言处理，Natural Language Process"
 
-
-
-
-
-
+    print(Tokenizer.encode(text))
