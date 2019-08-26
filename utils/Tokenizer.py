@@ -17,7 +17,7 @@ class Tokenizer(object):
 		else build new embedding matrix
 	"""
 
-	def __init__(self, origin_text, max_seq_len, emb_dim, lower=True, emb_type="tencent", dat_fname="path_1", fname="path_2"):
+	def __init__(self, origin_text, max_seq_len, emb_dim, lower, emb_type, dat_fname, fname):
 		self.origin_text = origin_text
 		self.max_seq_len = max_seq_len
 		self.emb_dim = emb_dim
@@ -34,7 +34,6 @@ class Tokenizer(object):
 		self.__load_embedding(word2idx=self.word2idx, emb_dim=self.emb_dim, dat_fname=self.path_1, fname=self.path_2)
 		self.__set_vocabulary(self.origin_text)
 		self.__encode_vocab()
-
 
 	@staticmethod
 	def __embedding_info():
