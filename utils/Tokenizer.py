@@ -17,21 +17,20 @@ class Tokenizer(object):
 		else build new embedding matrix
 	"""
 
-	def __init__(self, origin_text, max_seq_len, emb_dim, lower, emb_type, dat_fname, fname):
+	def __init__(self, origin_text, max_seq_len, emb_type, dat_fname):
+
 		self.origin_text = origin_text
 		self.max_seq_len = max_seq_len
-		self.emb_dim = emb_dim
-		self.lower = lower
-		self.emb_type = emb_type
-		self.path_1 = dat_fname
-		self.path_2 = fname
+		self.lower = True
+		self.emb_type = emb_type.lower()
+		self.dat_path = dat_fname
 
 		self.word2idx = {}
 		self.idx2word = {}
 		self.vocab_embed = []
 
 		self.embedding_info = Tokenizer.__embedding_info()
-		self.__load_embedding(word2idx=self.word2idx, emb_dim=self.emb_dim, dat_fname=self.path_1, fname=self.path_2)
+		self.__load_embedding(word2idx=self.word2idx, dat_fname=self.dat_path)
 		self.__set_vocabulary(self.origin_text)
 		self.__encode_vocab()
 
@@ -52,16 +51,20 @@ class Tokenizer(object):
 
 		return embedding_files
 
-	def __load_embedding(self, word2idx, emb_dim, dat_fname, fname):
+	def __load_embedding(self, word2idx, emb_dim, dat_fname):
 		if os.path.exists(dat_fname):
 			embedding_matrix = pickle.load(open(dat_fname, 'rb'))
-		else:
+        elif self.emb_type == 'random': 
+			embedding_matrix = np.zeros((len(word2idx) + 2, emb_dim))  # idx 0 and len(word2idx)+1 are all-zeros
+			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
+        elif self.emb_type == 'tencent':
 			embedding_matrix = np.zeros((len(word2idx) + 2, emb_dim))  # idx 0 and len(word2idx)+1 are all-zeros
 			word_vec = Tokenizer.__get_vocabulary_embedding_vector_list(fname, word2idx=word2idx)
 			for word, i in word2idx.items():
 				embedding_matrix[i] = word_vec[word]
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-
+        elif self.emb_type == 'bert':
+            pass
 		self.embedding_matrix = embedding_matrix
 
 	def __set_vocabulary(self, input_text):
@@ -144,6 +147,6 @@ class Tokenizer(object):
 
 
 if __name__ == '__main__':
-	tokenizer = Tokenizer(512, emb_type='tencent')
+	tokenizer = Tokenizer(512, emb_type='tencent', dat_fname='tokenizer.dat')
 	text = "中文自然语言处理，Natural Language Process"
 	print(tokenizer.encode(text))

@@ -1,3 +1,4 @@
+*.swp
 corpus/
 result*
 venv*/
