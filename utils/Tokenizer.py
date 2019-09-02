@@ -2,9 +2,13 @@
 # file: data_utils.py
 # author: apollo2mars <apollo2mars@gmail.com>
 
-import os
 import pickle
 import numpy as np
+
+import os,sys
+from os import path
+sys.path.append(path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 class Tokenizer(object):
@@ -17,9 +21,8 @@ class Tokenizer(object):
 		else build new embedding matrix
 	"""
 
-	def __init__(self, origin_text, max_seq_len, emb_type, dat_fname):
+	def __init__(self, max_seq_len, emb_type, dat_fname):
 
-		self.origin_text = origin_text
 		self.max_seq_len = max_seq_len
 		self.lower = True
 		self.emb_type = emb_type.lower()
@@ -31,7 +34,6 @@ class Tokenizer(object):
 
 		self.embedding_info = Tokenizer.__embedding_info()
 		self.__load_embedding(word2idx=self.word2idx, dat_fname=self.dat_path)
-		self.__set_vocabulary(self.origin_text)
 		self.__encode_vocab()
 
 	@staticmethod
@@ -40,7 +42,7 @@ class Tokenizer(object):
 			'Static':{
 				"Word2Vec":"",
 				"Glove":"",
-				"Tencent":""},
+				"Tencent":"resources/Tencent_AILab_ChineseEmbedding.txt"},
 			'Dynamic':{
 				"BERT":"",
 				"ELMo":"",
@@ -54,33 +56,18 @@ class Tokenizer(object):
 	def __load_embedding(self, word2idx, emb_dim, dat_fname):
 		if os.path.exists(dat_fname):
 			embedding_matrix = pickle.load(open(dat_fname, 'rb'))
-        elif self.emb_type == 'random': 
+		elif self.emb_type == 'random':
 			embedding_matrix = np.zeros((len(word2idx) + 2, emb_dim))  # idx 0 and len(word2idx)+1 are all-zeros
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-        elif self.emb_type == 'tencent':
-			embedding_matrix = np.zeros((len(word2idx) + 2, emb_dim))  # idx 0 and len(word2idx)+1 are all-zeros
-			word_vec = Tokenizer.__get_vocabulary_embedding_vector_list(fname, word2idx=word2idx)
+		elif self.emb_type == 'tencent':
+			embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
+			word_vec = Tokenizer.__get_vocabulary_embedding_vector_list(self.__embedding_info()['Static']["Tencent"], word2idx=word2idx)
 			for word, i in word2idx.items():
 				embedding_matrix[i] = word_vec[word]
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-        elif self.emb_type == 'bert':
-            pass
+		elif self.emb_type == 'bert':
+			pass
 		self.embedding_matrix = embedding_matrix
-
-	def __set_vocabulary(self, input_text):
-		"""
-		:param text: text for generate vocabulary
-		:return: null
-		"""
-		if self.lower:
-			tmp_text = input_text.lower()
-
-		from collections import Counter
-		count = Counter(tmp_text)
-
-		for idx, item in enumerate(count):
-			self.word2idx[item] = idx + 1  # must + 1
-			self.idx2word[idx + 1] = item
 
 	def __encode_vocab(self, input_path, word2idx=None):
 		"""
@@ -128,14 +115,33 @@ class Tokenizer(object):
 			x[-len(trunc):] = trunc
 		return x
 
+	def set_vocabulary(self, input_text):
+		"""
+		:param input_text: text for generate vocabulary
+		:return: null
+		"""
+		if self.lower:
+			tmp_text = input_text.lower()
+
+		from collections import Counter
+		count = Counter(tmp_text)
+
+		for idx, item in enumerate(count):
+			self.word2idx[item] = idx + 1  # must + 1
+			self.idx2word[idx + 1] = item
+
 	def encode(self, text, reverse=False, padding='post', truncating='post'):
 		"""
-		convert text to numberical gigital features with max length, paddding
+		:param text:
+		:param reverse:
+		:param padding:
+		:param truncating:
+		:return: convert text to numberical gigital features with max length, paddding
 		and truncating
 		"""
 		if self.lower:
-			text = text.lower()
-		words = list(text)
+			text_lower = text.lower()
+		words = list(text_lower)
 		unknown_idx = len(self.word2idx)+1
 		sequence = [self.word2idx[w] if w in self.word2idx else unknown_idx for w in words]
 		if len(sequence) == 0:
@@ -149,4 +155,5 @@ class Tokenizer(object):
 if __name__ == '__main__':
 	tokenizer = Tokenizer(512, emb_type='tencent', dat_fname='tokenizer.dat')
 	text = "中文自然语言处理，Natural Language Process"
-	print(tokenizer.encode(text))
+	tokenizer.set_vocabulary(text)
+	print(tokenizer.encode("中文"))
