@@ -12,7 +12,7 @@ sys.path.append(path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 class Tokenizer(object):
-	""" Tokenizer for Machine Reading Comprehension
+    """ Tokenizer for Machine Reading Comprehension
 
 	1. Input : max length of context
 	2. Get vocabulary dict : self.word2idx and self.idx2word
@@ -21,28 +21,25 @@ class Tokenizer(object):
 		else build new embedding matrix
 	"""
 
-	def __init__(self, max_seq_len, emb_type, dat_fname):
-
-		self.max_seq_len = max_seq_len
-		self.lower = True
-		self.emb_type = emb_type.lower()
-		self.dat_path = dat_fname
-
-		self.word2idx = {}
-		self.idx2word = {}
-		self.vocab_embed = []
-
-		self.embedding_info = Tokenizer.__embedding_info()
-		self.__load_embedding(word2idx=self.word2idx, dat_fname=self.dat_path)
-		self.__encode_vocab()
+    def __init__(self, max_seq_len, emb_type, dat_fname):
+        self.max_seq_len = max_seq_len
+        self.lower = True
+	    self.emb_type = emb_type.lower()
+        self.dat_path = dat_fname
+        self.word2idx = {}
+        self.idx2word = {}
+        self.vocab_embed = []
+        self.embedding_matrix = []
+        self.embedding_info = Tokenizer.__embedding_info()
+        self.__load_embedding(word2idx=self.word2idx, dat_fname=self.dat_path)
 
 	@staticmethod
 	def __embedding_info():
-		embedding_files = {
+        embedding_files = {
 			'Static':{
 				"Word2Vec":"",
 				"Glove":"",
-				"Tencent":"resources/Tencent_AILab_ChineseEmbedding.txt"},
+				"Tencent":"../resources/Tencent_AILab_ChineseEmbedding.txt"},
 			'Dynamic':{
 				"BERT":"",
 				"ELMo":"",
@@ -70,6 +67,7 @@ class Tokenizer(object):
 		elif self.emb_type == 'bert':
 			pass
 		self.embedding_matrix = embedding_matrix
+        print(embedding_matrix)
 
 	def __encode_vocab(self, input_path, word2idx=None):
 		"""
@@ -138,7 +136,7 @@ class Tokenizer(object):
 		:param reverse:
 		:param padding:
 		:param truncating:
-		:return: convert text to numberical gigital features with max length, paddding
+		:return: convert text to numberical digital features with max length, paddding
 		and truncating
 		"""
 		if self.lower:
