@@ -25,12 +25,10 @@ class Tokenizer(object):
         self.emb_type = emb_type.lower()
         self.dat_path = dat_fname
 
-        self.lower = True
         self.word2idx = {}
         self.idx2word = {}
         self.word2vec = {}  # {"Apple":[1,2,2,3,5], "Book":"1,2,1,1,1"}
         self.embedding_matrix = []
-
 
         self.embedding_info = Tokenizer.__embedding_info()
         self.__load_embedding(word2idx=self.word2idx, dat_fname=self.dat_path)
@@ -53,7 +51,6 @@ class Tokenizer(object):
         }
         
         return embedding_files
-    
 
     def __load_embedding(self, word2idx, dat_fname):
         if os.path.exists(dat_fname):
@@ -105,12 +102,14 @@ class Tokenizer(object):
         for line in fin:
             tokens = line.rstrip().split(' ')
             if tokens[0] in word2idx.keys():
+                print(tokens[0])
+                print(tokens[1:])
                 word2vec[tokens[0]] = np.asarray(tokens[1:], dtype='float32')
         
         print('word2vec', word2vec)
         self.word2vec = word2vec
 
-    def __pad_and_truncate(cls, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
+    def __pad_and_truncate(self, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
         x = (np.ones(maxlen) * value).astype(dtype)
 
         if truncating == 'pre':
@@ -160,6 +159,7 @@ class Tokenizer(object):
 
         tmp_list = self.__pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
         return [ self.embedding_matrix[item] for item in tmp_list]
+
 
 if __name__ == '__main__':
     emb_type = 'tencent'
