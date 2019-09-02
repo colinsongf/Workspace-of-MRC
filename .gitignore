@@ -1,4 +1,5 @@
 *.swp
+resources/*
 corpus/
 result*
 venv*/

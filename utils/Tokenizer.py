@@ -53,15 +53,17 @@ class Tokenizer(object):
 
 		return embedding_files
 
-	def __load_embedding(self, word2idx, emb_dim, dat_fname):
+	def __load_embedding(self, word2idx, dat_fname):
 		if os.path.exists(dat_fname):
 			embedding_matrix = pickle.load(open(dat_fname, 'rb'))
 		elif self.emb_type == 'random':
-			embedding_matrix = np.zeros((len(word2idx) + 2, emb_dim))  # idx 0 and len(word2idx)+1 are all-zeros
+			embedding_matrix = np.zeros((len(word2idx) + 2, 300))  # idx 0 and len(word2idx)+1 are all-zeros
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-		elif self.emb_type == 'tencent':
-			embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
-			word_vec = Tokenizer.__get_vocabulary_embedding_vector_list(self.__embedding_info()['Static']["Tencent"], word2idx=word2idx)
+        elif self.emb_type == 'tencent':
+            embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
+            path = self.__embedding_info()['Static']["Tencent"]
+            print(">>>", path)
+            word_vec = Tokenizer.__encode_vocab(input_path=path, word2idx=word2idx)
 			for word, i in word2idx.items():
 				embedding_matrix[i] = word_vec[word]
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
