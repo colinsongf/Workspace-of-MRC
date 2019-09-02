@@ -59,13 +59,13 @@ class Tokenizer(object):
 		elif self.emb_type == 'random':
 			embedding_matrix = np.zeros((len(word2idx) + 2, 300))  # idx 0 and len(word2idx)+1 are all-zeros
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-        elif self.emb_type == 'tencent':
-            embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
-            path = self.__embedding_info()['Static']["Tencent"]
-            print(">>>", path)
-            word_vec = Tokenizer.__encode_vocab(input_path=path, word2idx=word2idx)
+		elif self.emb_type == 'tencent':
+			embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
+			tmp_path = self.__embedding_info()['Static']["Tencent"]
+			print(">>>", tmp_path)
+			self.__encode_vocab(input_path=tmp_path, word2idx=word2idx)
 			for word, i in word2idx.items():
-				embedding_matrix[i] = word_vec[word]
+				embedding_matrix[i] = self.vocab_embed[word]
 			pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
 		elif self.emb_type == 'bert':
 			pass
@@ -155,7 +155,8 @@ class Tokenizer(object):
 
 
 if __name__ == '__main__':
-	tokenizer = Tokenizer(512, emb_type='tencent', dat_fname='tokenizer.dat')
+	emb_type = 'tencent'
+	tokenizer = Tokenizer(512, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
 	text = "中文自然语言处理，Natural Language Process"
 	tokenizer.set_vocabulary(text)
 	print(tokenizer.encode("中文"))
