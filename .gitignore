@@ -1,3 +1,4 @@
+*.dat
 *.swp
 resources/*
 corpus/
