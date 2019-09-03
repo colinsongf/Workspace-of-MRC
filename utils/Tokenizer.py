@@ -16,11 +16,18 @@ class Tokenizer(object):
 
     1. Input : max length of context
     2. Get vocabulary dict : self.word2idx and self.idx2word
-    3. Get Embedding Matrix
+    3. Get word2vec
+    3. Get
         if embedding matrix exits, load from exit file
         else build new embedding matrix
     """
     def __init__(self, origin_file, max_seq_len, emb_type, dat_fname):
+        """
+        :param origin_file: corpus for fit word2idx and idx2word
+        :param max_seq_len:
+        :param emb_type:
+        :param dat_fname: embedding matrix file name
+        """
 
         self.max_seq_len = max_seq_len
         self.emb_type = emb_type.lower()
@@ -44,6 +51,9 @@ class Tokenizer(object):
         self.__set_embedding_matrix(word2idx=self.word2idx, dat_fname=self.dat_path)
         
     def __set_embedding_info(self):
+        """
+        :return: embedding files dict
+        """
         embedding_files = {
             'Static':{
                 "Word2Vec":"",
@@ -109,6 +119,11 @@ class Tokenizer(object):
         self.word2vec = word2vec
 
     def __set_embedding_matrix(self, word2idx, dat_fname):
+        """
+        :param word2idx: word2idx
+        :param dat_fname: embedding matrix file path
+        :return:
+        """
         if os.path.exists(dat_fname):
             print("use exist embedding file")
             embedding_matrix = pickle.load(open(dat_fname, 'rb'))
@@ -128,8 +143,16 @@ class Tokenizer(object):
        
         self.embedding_matrix = embedding_matrix
         
-
     def __pad_and_truncate(self, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
+        """
+        :param sequence:
+        :param maxlen:
+        :param dtype:
+        :param padding:
+        :param truncating:
+        :param value:
+        :return: sequence after padding and truncate
+        """
         x = (np.ones(maxlen) * value).astype(dtype)
 
         if truncating == 'pre':
@@ -142,7 +165,6 @@ class Tokenizer(object):
         else:
             x[-len(trunc):] = trunc
         return x
-
 
     def encode(self, text, reverse=False, padding='post', truncating='post'):
         """
