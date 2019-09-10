@@ -23,15 +23,12 @@ class Tokenizer(object):
         if embedding matrix exits, load from exit file
         else build new embedding matrix
     """
-    def __init__(self, corpus_files, max_seq_len, emb_type):
+    def __init__(self, corpus_files, emb_type):
         """
-
         :param corpus_files:
-        :param max_seq_len:
         :param emb_type:
         """
 
-        self.max_seq_len = max_seq_len
         self.emb_type = emb_type.lower()
 
         self.lower = True
@@ -53,6 +50,12 @@ class Tokenizer(object):
         self.idx2word = {}
         self.word2vec = {}  # {"Apple":[1,2,2,3,5], "Book":"1,2,1,1,1"}
         self.embedding_matrix = []
+
+        # add <PAD> <UNK>
+        self.word2idx['<PAD>'] = 0
+        self.word2idx['<UNK>'] = 1
+        self.idx2word[0] = self.word2idx['<PAD>']
+        self.idx2word[1] = self.word2idx['<UNK>']
 
         self.__set_embedding_info()
         self.__set_vocabulary(input_text=self.fit_text)
@@ -92,14 +95,6 @@ class Tokenizer(object):
 
         from collections import Counter
         count = Counter(tmp_text)
-
-        # add <PAD> <UNK>
-
-        self.word2idx['<UNK>'] = 0
-        self.word2idx['<PAD>'] = 1
-
-        self.idx2word[0] = self.word2idx['<UNK>']
-        self.idx2word[1] = self.word2idx['<PAD>']
 
         for idx, item in enumerate(count):
             self.word2idx[item] = idx + 2
@@ -148,8 +143,8 @@ class Tokenizer(object):
         elif self.emb_type == 'tencent':
             embedding_matrix = np.zeros((len(word2idx) + 2, 200))
             unknown_words_vector = np.random.rand(200)
-            embedding_matrix[0] = unknown_words_vector  # Unknown words
-            embedding_matrix[1] = np.zeros(200) # Padding
+            embedding_matrix[self.word2idx['<UNK>']] = unknown_words_vector  # Unknown words
+            embedding_matrix[self.word2idx['<PAD>']] = np.zeros(200) # Padding
 
             for word, idx in word2idx.items():
                 if word in self.word2vec.keys():
@@ -161,62 +156,23 @@ class Tokenizer(object):
             pass
        
         self.embedding_matrix = embedding_matrix
-        
-    def __pad_and_truncate(self, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
-        """
-        :param sequence:
-        :param maxlen:
-        :param dtype:
-        :param padding:
-        :param truncating:
-        :param value:
-        :return: sequence after padding and truncate
-        """
-        x = (np.ones(maxlen) * value).astype(dtype)
-
-        if truncating == 'pre':
-            trunc = sequence[-maxlen:]
-        else:
-            trunc = sequence[:maxlen]
-            trunc = np.asarray(trunc, dtype=dtype)
-        if padding == 'post':
-            x[:len(trunc)] = trunc
-        else:
-            x[-len(trunc):] = trunc
-        return x
-
-    def encode(self, text, reverse=False, padding='post', truncating='post'):
-        """
-        :param text:
-        :param reverse:
-        :param padding:
-        :param truncating:
-        :return: convert text to numberical digital features with max length, paddding
-        and truncating
-        """
-        words = list(text)
-        unknown_idx = 0
-        sequence = [self.word2idx[w] if w in self.word2idx else unknown_idx for w in words]
-        if len(sequence) == 0:
-            sequence = [0]
-        if reverse:
-            sequence = sequence[::-1]
-
-        tmp_list = self.__pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
-        return [self.embedding_matrix[item] for item in tmp_list]
 
 
-def build_tokenizer(corpus_files, max_seq_len, corpus_type, embedding_type):
+def build_tokenizer(corpus_files, corpus_type, embedding_type):
+    """
+    corpus files and corpus type can merge
+    """
     tokenizer_path = corpus_type + "_" + embedding_type + "_" + "tokenizer.dat"
     if os.path.exists(tokenizer_path):
         print('load exist tokenizer:', tokenizer_path)
         tokenizer = pickle.load(open(tokenizer_path, 'rb'))
     else:
         print('build new tokenizer:', tokenizer_path)
-        tokenizer = Tokenizer(corpus_files=corpus_files, max_seq_len=max_seq_len, emb_type=embedding_type)
+        tokenizer = Tokenizer(corpus_files=corpus_files,
+                              emb_type=embedding_type)
         pickle.dump(tokenizer, open(tokenizer_path, 'wb'))
     return tokenizer
 
 
 if __name__ == '__main__':
-    build_tokenizer(['corpus.txt'], 32, 'demo', 'tencent')
+    build_tokenizer(['corpus.txt'], 'entity', 'tencent')

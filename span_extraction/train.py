@@ -24,7 +24,7 @@ class Instructor:
 
         # build tokenizer
         tokenizer = build_tokenizer(corpus_files=[opt.dataset['train'], opt.dataset['test']], max_seq_len=512, corpus_type='qa', embedding_type='tencent')
-5
+
         # build model and session
         self.model = BIDAF(self.opt, tokenizer)
         self.session = self.model.session
@@ -68,31 +68,32 @@ class Instructor:
             except tf.errors.OutOfRangeError:
                 break
         
-         = self._eval_metrics(val_data_loader)
+         # = self._eval_metrics(val_data_loader)
 
     def _eval_metrics(self, data_loader):
-        iterator = data_loader.make_one_shot_iterator()
-        one_element = iterator.get_next()
-
-        all_outputs = []
-        while True:
-            try:
-                sample_batched = self.session.run(one_element)
-                inputs = sample_batched('text') 
-                #inputs = sample_batched('text') 
-                #inputs = sample_batched('text') 
-
-                model = self.model
-                outputs = self.session.run(model.output_op, feed_dict={})
-
-                all_outputs.extend(outputs)
-            except tf.errors.OutOfRangeError:
-                break
-
-        metrics_1 = 
-        logger.info(metrics_1)
-
-        return metrics_1
+        pass
+        # iterator = data_loader.make_one_shot_iterator()
+        # one_element = iterator.get_next()
+        #
+        # all_outputs = []
+        # while True:
+        #     try:
+        #         sample_batched = self.session.run(one_element)
+        #         inputs = sample_batched('text')
+        #         #inputs = sample_batched('text')
+        #         #inputs = sample_batched('text')
+        #
+        #         model = self.model
+        #         outputs = self.session.run(model.output_op, feed_dict={})
+        #
+        #         all_outputs.extend(outputs)
+        #     except tf.errors.OutOfRangeError:
+        #         break
+        #
+        # metrics_1 =
+        # logger.info(metrics_1)
+        #
+        # return metrics_1
 
         
     def run(self):
@@ -102,7 +103,7 @@ class Instructor:
 
         # calculate metric on test set 
         self.saver.restore(self.session, best_model_path)
-        metric_1 = self._eval_metrics(test_data_loader)
+        metric_1 = self._eval_metrics(self.test_data_loader)
         logger.info('>> metric:{.:4f},'.format(metric_1))
         
 
