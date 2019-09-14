@@ -12,50 +12,70 @@
 
 # Dataset
 
+## Challenge
+
+| New        | Tips  |
+| ---------- | ----- |
+| CIPS-SOGOU | DGCNN |
+|            |       |
+|            |       |
+
+
+
+## Key Dataset
+
+| Mulit Type                                                   | Types |      |
+| ------------------------------------------------------------ | ----- | ---- |
+| MT1 百度深度学习实验室;中文开放域事实型问答数据集 [paper](Dataset and Neural Recurrent Sequence Labeling Model for Open-Domain Factoid Question Answering) [dataset]() |       |      |
+|                                                              |       |      |
+|                                                              |       |      |
+
+
+
 ## Close/Factoid/Multi Choice
 
-| Dataset                                                      | Lang | Query             | Doc              | query source                    | doc source   | Answer                 | Author              | Tips                                                         |
-| ------------------------------------------------------------ | ---- | ----------------- | ---------------- | ------------------------------- | ------------ | ---------------------- | ------------------- | ------------------------------------------------------------ |
-| [CNN/Daily Mail](http://cs.nyu.edu/~kcho/DMQA/)              | ENG  | 1.4M(380K + 879K) | 300K(90k + 197K) | Close                           | News         | Fill in entity         | Deep Mind           |                                                              |
-| CBT                                                          |      |                   |                  |                                 |              |                        |                     |                                                              |
-| CLOTH                                                        |      |                   |                  |                                 |              |                        |                     |                                                              |
-| LAMBADA                                                      |      |                   |                  |                                 |              |                        |                     |                                                              |
-| Who-did-What                                                 |      |                   |                  |                                 |              |                        |                     |                                                              |
-| CliCR                                                        |      |                   |                  |                                 |              |                        |                     |                                                              |
-| HLF-RC                                                       | CHN  | 100K              | 28K              | Close                           | Fairy/news   | Fill in word           |                     |                                                              |
-| RACE                                                         | ENG  | 870K              | 50K              | english exam                    | english exam | Multi choice           |                     |                                                              |
-| MCTest                                                       |      |                   |                  |                                 |              | Multi choice           |                     |                                                              |
-| SQuAD 1                                                      | ENG  | 100K              | 536              |                                 |              | Span                   |                     | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |
-| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)     |      |                   |                  |                                 |              | Span                   |                     | 一共有107,785问题，以及配套的 536 篇文章  数据集的具体构建如下：  文章是随机sample的wiki百科，一共有536篇wiki被选中。而每篇wiki，会被切成段落，最终生成了23215个自然段。 |
-| NEWSQA                                                       |      |                   |                  |                                 |              | span                   |                     |                                                              |
-| TriviaQA                                                     | ENG  | 40K               | 660K             | Trivia websites                 | Wiki/Web doc | Span/substring of word |                     |                                                              |
-| DuoRC                                                        |      |                   |                  |                                 |              | Span                   |                     |                                                              |
-| MS-MARCO                                                     | ENG  | 100K              | 200K             | User Logs                       | Web doc      | Summary by human       |                     | MARCO 也不限制答案必须是文档中的片段，很多问题的答案必须经过多篇文档综合提炼得到 |
-| DuReader                                                     | ENG  | 200K              | 1000K            | User Logs                       | Web doc/CQA  | Summary  by human      |                     |                                                              |
-| MRQA2019                                                     |      |                   |                  |                                 |              |                        |                     |                                                              |
-| CMRC 2018                                                    |      |                   |                  |                                 |              |                        | 哈工大-讯飞         | 形式与SQuAD相同                                              |
-| DRCD                                                         |      |                   |                  |                                 |              |                        | 中国台湾台达研究院  | 形式与SQuAD相同，是基于繁体中文的抽取式阅读理解数据集        |
-| Amazon question/answer data                                  |      |                   |                  |                                 |              |                        |                     | 亚马逊产品的问答http://jmcauley.ucsd.edu/data/amazon/qa/     |
-| [Deepmind Question Answering Corpus](https://github.com/deepmind/rc-data) |      |                   |                  |                                 |              |                        |                     |                                                              |
-| Program Induction by Rationale Generation : Learning to Solve and Explain Algebraic Word Problems [dataset](https://github.com/deepmind/AQuA) |      |                   |                  |                                 |              |                        | DeepMind 和牛津大学 |                                                              |
-| LSDSem 2017 Shared Task: The Story Cloze Test [dataset](http://cs.rochester.edu/nlp/rocstories/) |      |                   |                  | Close                           |              |                        |                     | 人工合成                                                     |
-| SougoQA                                                      |      |                   |                  |                                 |              |                        |                     | http://task.www.sogou.com/cips-sogou_qa/                     |
-| [factoid webquestion](https://github.com/brmson/dataset-factoid-webquestions)<br/><br/>[QA-Data](http://www.cs.cmu.edu/~ark/QA-data) |      |                   |                  | Factoid QA                      |              |                        | Cmu                 |                                                              |
-| [use-of-external-knowledge-of-factoid-qa/](https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/) |      |                   |                  | Factoid<br />External Knowledge |              |                        | microsoft           | 将 KB 三元组转化为问句                                       |
-| Looking Beyond the surface                                   |      |                   |                  | Mulit Choice QA                 |              |                        |                     | 多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 |
+| Dataset                                                      | Lang | Query             | Doc              | query source                    | doc source   | Type                                                         |
+| ------------------------------------------------------------ | ---- | ----------------- | ---------------- | ------------------------------- | ------------ | ------------------------------------------------------------ |
+| Deep Mind [CNN/Daily Mail](http://cs.nyu.edu/~kcho/DMQA/)    | ENG  | 1.4M(380K + 879K) | 300K(90k + 197K) | Close                           | News         | Fill in entity                                               |
+| CBT                                                          |      |                   |                  |                                 |              |                                                              |
+| CLOTH                                                        |      |                   |                  |                                 |              |                                                              |
+| LAMBADA                                                      |      |                   |                  |                                 |              |                                                              |
+| Who-did-What                                                 |      |                   |                  |                                 |              |                                                              |
+| CliCR                                                        |      |                   |                  |                                 |              |                                                              |
+| HLF-RC                                                       | CHN  | 100K              | 28K              | Close                           | Fairy/news   | Fill in word                                                 |
+| RACE                                                         | ENG  | 870K              | 50K              | english exam                    | english exam | Multi choice                                                 |
+| MCTest                                                       |      |                   |                  |                                 |              | Multi choice                                                 |
+| SQuAD 1                                                      | ENG  | 100K              | 536              |                                 |              | Span                                                         |
+| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)     |      |                   |                  |                                 |              | Span                                                         |
+| NEWSQA                                                       |      |                   |                  |                                 |              | span                                                         |
+| TriviaQA                                                     | ENG  | 40K               | 660K             | Trivia websites                 | Wiki/Web doc | Span/substring of word                                       |
+| DuoRC                                                        |      |                   |                  |                                 |              | Span                                                         |
+| MS-MARCO<br />答案不限制在文中；多文档                       | ENG  | 100K              | 200K             | User Logs                       | Web doc      | Summary by human                                             |
+| DuReader                                                     | ENG  | 200K              | 1000K            | User Logs                       | Web doc/CQA  | Summary  by human                                            |
+| MRQA2019                                                     |      |                   |                  |                                 |              |                                                              |
+| 哈工大-讯飞<br />CMRC 2018<br />形式与SQuAD相同              |      |                   |                  |                                 |              |                                                              |
+| 中国台湾台达研究院<br />DRCD<br />形式与SQuAD相同，是基于繁体中文的抽取式阅读理解数据集 |      |                   |                  |                                 |              |                                                              |
+| 亚马逊产品的问答 [data](http://jmcauley.ucsd.edu/data/amazon/qa/) |      |                   |                  |                                 |              |                                                              |
+| [Deepmind Question Answering Corpus](https://github.com/deepmind/rc-data) |      |                   |                  |                                 |              |                                                              |
+| DeepMind 和牛津大学<br />Program Induction by Rationale Generation : Learning to Solve and Explain Algebraic Word Problems [dataset](https://github.com/deepmind/AQuA) |      |                   |                  |                                 |              |                                                              |
+| LSDSem 2017 Shared Task: The Story Cloze Test [dataset](http://cs.rochester.edu/nlp/rocstories/) |      |                   |                  | Close                           |              |                                                              |
+| [SougoQA](http://task.www.sogou.com/cips-sogou_qa/)          |      |                   |                  |                                 |              |                                                              |
+| CMU [factoid webquestion](https://github.com/brmson/dataset-factoid-webquestions)<br/><br/>[QA-Data](http://www.cs.cmu.edu/~ark/QA-data) |      |                   |                  | Factoid QA                      |              |                                                              |
+| microsoft<br />[use-of-external-knowledge-of-factoid-qa/](https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/)<br />将 KB 三元组转化为问句 |      |                   |                  | Factoid<br />External Knowledge |              |                                                              |
+| Looking Beyond the surface                                   |      |                   |                  | Mulit Choice QA                 |              | 多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 |
 
+## Free Answer
 
+| Free Answer                                     | SOTA                                                         | Tips                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| bAbI                                            |                                                              |                                                              |
+| [MARCO V2](http://www.msmarco.org/leaders.aspx) | Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |                                                              |
+| SearchQA                                        |                                                              |                                                              |
+| NarrativeQA                                     | https://www.leiphone.com/news/201712/mjCYZ8WTiREqja6L.html https://github.com/deepmind/narrativeqa | DeepMind认为目前的阅读理解数据集均存在着一定的局限性，包括：数据集小、不自然、只需要一句话定位回答的必须信息，等等。因而 Deepmind 认为，在这些数据集上的测试可能都是一个不能真实反映机器阅读理解能力的伪命题。 |
+| DuReader                                        |                                                              |                                                              |
+|                                                 |                                                              |                                                              |
 
-| Free Answer                                                  | SOTA                                                         | Tips                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| bAbI                                                         |                                                              |                                                              |
-| [MARCO V2](http://www.msmarco.org/leaders.aspx)              | Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |                                                              |
-| SearchQA                                                     |                                                              |                                                              |
-| NarrativeQA                                                  | https://www.leiphone.com/news/201712/mjCYZ8WTiREqja6L.html https://github.com/deepmind/narrativeqa | DeepMind认为目前的阅读理解数据集均存在着一定的局限性，包括：数据集小、不自然、只需要一句话定位回答的必须信息，等等。因而 Deepmind 认为，在这些数据集上的测试可能都是一个不能真实反映机器阅读理解能力的伪命题。 |
-| DuReader                                                     |                                                              |                                                              |
-| Dataset and Neural Recurrent Sequence Labeling Model for Open-Domain Factoid Question Answering |                                                              | 百度深度学习实验室创建的中文开放域事实型问答数据集。 论文链接：http://www.paperweekly.site/papers/914 数据集链接：http://idl.baidu.com/WebQA.html |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
+## KBQA
 
 | KBQA                                                         | Tips                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -69,7 +89,7 @@
 | SimpleQuestions                                              |                                                              |
 | WikiMovies                                                   |                                                              |
 | TriviaQA                                                     |                                                              |
-| Semantic Parsing on Freebase from Question-Answer Pairs<br />[dataset](http://t.cn/RWPdQQO) | 文章发表在 EMNLP-13，The Stanford NLP Group 是世界领先的 NLP 团队。 他们在这篇文章中引入了 WebQuestions 这个著名的问答数据集，WebQuestion 主要是借助 Google Suggestion 构造的 依靠 Freebase（一个大型知识图谱）中的实体来回答，属于事实型问答数据集（比起自然语言，容易评价结果优劣） 有 6642 个问答对 最初，他们构造这个数据集是为了做 Semantic Parsing，以及发布自己的系统 SEMPRE system |
+| [Web Question]()Semantic Parsing on Freebase from Question-Answer Pairs<br />[dataset](http://t.cn/RWPdQQO) | Standford;EMNLP-13 他们在这篇文章中引入了 WebQuestions 这个著名的问答数据集，WebQuestion 主要是借助 Google Suggestion 构造的 依靠 Freebase（一个大型知识图谱）中的实体来回答，属于事实型问答数据集（比起自然语言，容易评价结果优劣） 有 6642 个问答对 最初，他们构造这个数据集是为了做 Semantic Parsing，以及发布自己的系统 SEMPRE system |
 | Graph Questions <br />[paper](On Generating Characteristic-rich Question Sets for QA Evaluation) [dataset](https://github.com/ysu1989/GraphQuestions) | 文章发表在 EMNLP 2016，本文详细阐述了 GraphQuestions 这个数据集的构造方法，强调这个数据集是富含特性的（Characteristic-rich）。  数据集特点：  基于 Freebase，有 5166 个问题，涉及 148 个不同领域； 从知识图谱中产生 Minimal Graph Queries，再将 Query 自动转换成规范化的问题； 由于 2，Logical Form 不需要人工标注，也不存在无法用 Logical Form 表示的问题； 使用人工标注的办法对问题进行 paraphrasing，使得每个问题有多种表述方式（答案不变），主要是 Entity-level Paraphrasing，也有 sentence-level； Characteristic-rich 指数据集提供了问题在下列维度的信息，使得研究者可以对问答系统进行细粒度的分析, 找到研究工作的前进方向：关系复杂度（Structure Complexity），普遍程度（Commonness），函数（Function），多重释义（Paraphrasing），答案候选数（Answer Cardinality） |
 | NLPCC-DBQA                                                   | NLPCC 2016 的评测任务;                                       |
 
@@ -92,54 +112,66 @@
 - BLEU
 
 # General Architecture
-+ Embedding
-    + One-hot
-    + Static Embedding
-        + Word2Vec
-        + Glove
-    + Dynamic Embedding(Contextualized based)
-        + Cove
-        + ELMo
-        + GPT
-        + BERT
-        + MASS
-        + UniLM
-        + XLNET
-    + Multiple Granularity
-        + Character Embedding
-        + POS
-        + NER
-        + Binary Feature of Exact Match (EM)
-        + Query-Category    
-+ Feature Extraction
-    + CNN
-    + RNN
-    + Transformer
-+ Context-Question Interaction
-    + Un Attn
-    + Bi Attn
-    + One-hop Interaction
-    + Multi-hop Interaction
-+ Answer Prediction
-    + Word Predictor
-    + Opinion Selector
-    + Span Extractor
-    + Answer Generator
-    + **Ranker**
+
+## Embedding
+
++ One-hot
++ Static Embedding
+    + Word2Vec
+    + Glove
++ Dynamic Embedding(Contextualized based)
+    + Cove
+    + ELMo
+    + GPT
+    + BERT
+    + MASS
+    + UniLM
+    + XLNET
++ Multiple Granularity
+    + Character Embedding
+    + POS
+    + NER
+    + Binary Feature of Exact Match (EM)
+    + Query-Category    
+
+## Feature Extraction
+
++ CNN
++ RNN
++ Transformer
+
+## Context-Question Interaction
+
++ Un Attn
++ Bi Attn
++ One-hop Interaction
++ Multi-hop Interaction
+
+## Answer Prediction
+
++ Word Predictor
++ Opinion Selector
++ Span Extractor
++ Answer Generator
++ **Ranker**
 
 # Solutions
+
+## Close Type
 
 | Close Type                                                   | Tips                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | A Corpus and Evaluation Framework for Deeper Understanding of Commonsense Stories | ROCStories dataset for story cloze test. 论文链接：http://www.paperweekly.site/papers/918 数据集链接：http://cs.rochester.edu/nlp/rocstories/ |
 |                                                              |                                                              |
-|                                                              |                                                              |
+
+## Multi Choice
 
 | Multi Choice                                                 | Tips                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Looking Beyond the surface: A Chanllenge Set for Reading Comprehension over Multiple Sentences | 特点:  多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 基准算法:  Random IR SurfaceIR SemanticLP BiDAF SOTA  SurfaceIR 结构的F1 值 相较人类结果 差 20个百分点 |
 |                                                              |                                                              |
-|                                                              |                                                              |
+
+## Span Extraction
 
 | Span Extraction                        | Tips |
 | -------------------------------------- | ---- |
@@ -155,11 +187,15 @@
 |                                                   |                                                              |
 |                                                   |                                                              |
 
+## Factoid QA
+
 | Factoid QA | Tips |
 | ---------- | ---- |
 |            |      |
 |            |      |
 |            |      |
+
+## Retrieval QA
 
 | Retrieval QA | Tips |
 | ------------ | ---- |
@@ -167,11 +203,21 @@
 |              |      |
 |              |      |
 
+## KBQA
+
 | KBQA | Tips |
 | ---- | ---- |
 |      |      |
 |      |      |
 |      |      |
+
+## NLU + NLG
+
+|      |      |      |
+| ---- | ---- | ---- |
+|      |      |      |
+|      |      |      |
+|      |      |      |
 
 
 
