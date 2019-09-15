@@ -16,6 +16,7 @@ import logging
 from dataset import BRCDataset
 from vocab import Vocab
 from rc_model import RCModel
+
 import time
 
 def parse_args():

@@ -279,3 +279,16 @@ class DuReaderDataset(object):
         for batch_start in np.arange(0, data_size, batch_size):
             batch_indices = indices[batch_start: batch_start + batch_size]
             yield self._one_mini_batch(data, batch_indices, pad_id)
+
+
+def build_dataset():
+
+
+if __name__ == '__main__':
+    prefix_path = 'corpus/dureader/preprocessed/preprocessed/'
+    train_files = [prefix_path + 'trainset/search.train.json']
+    dev_files = [prefix_path + 'devset/search.train.json']
+    test_files = [prefix_path + 'testset/search.train.json']
+
+    dataset = DuReaderDataset(max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
+
