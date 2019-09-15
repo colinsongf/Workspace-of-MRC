@@ -1,3 +1,7 @@
+*.txt
+*.dat
+*.swp
+resources/*
 corpus/
 result*
 venv*/

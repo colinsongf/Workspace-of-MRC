@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # author: apollo2mars <apollo2mars@gmail.com>
 
+<<<<<<< HEAD
 # problems: load other embedding
+=======
+# problem: vocabulary and word2vec not saved
+>>>>>>> 6b945f153e4c06b55dc990fab32bcf6ef7a49337
 # pickle hdf5
 
 import pickle
@@ -14,6 +18,7 @@ sys.path.append(path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 class Tokenizer(object):
+<<<<<<< HEAD
 
     def __init__(self, corpus_files, emb_type):
         """ Tokenizer for Machine Reading Comprehension
@@ -21,6 +26,25 @@ class Tokenizer(object):
         :param emb_type: choice embedding type for tokenizer's embedding matrix
         """
         self.emb_type = emb_type.lower()
+=======
+    """ Tokenizer for Machine Reading Comprehension
+
+    1. Input : max length of context
+    2. Get vocabulary dict : self.word2idx and self.idx2word
+    3. Get word2vec
+    3. Get
+        if embedding matrix exits, load from exit file
+        else build new embedding matrix
+    """
+    def __init__(self, corpus_files, emb_type):
+        """
+        :param corpus_files:
+        :param emb_type:
+        """
+
+        self.emb_type = emb_type.lower()
+
+>>>>>>> 6b945f153e4c06b55dc990fab32bcf6ef7a49337
         self.lower = True
 
         tmp_text = ''
