@@ -2,6 +2,9 @@
 # file: data_utils.py
 # author: apollo2mars <apollo2mars@gmail.com>
 
+# problem: vocabulary not saved
+# pickle hdf5
+
 import pickle
 import numpy as np
 
@@ -76,6 +79,9 @@ class Tokenizer(object):
         :param input_text: text for generate vocabulary
         :return: null
         """
+
+        # if file is exist, skip
+
         if self.lower:
             tmp_text = input_text.lower()
 
@@ -108,12 +114,13 @@ class Tokenizer(object):
         get embeddding vector list from embedding matrix by vovabulary
 
         """
+        # if file is exist skip
+
         fin = open(embedding_path, 'r', encoding='utf-8', newline='\n', errors='ignore')
         word2vec = {}
         for line in fin:
             tokens = line.rstrip().split(' ') 
             if tokens[0] in word2idx.keys():
-                print("="*20, "go in")
                 word2vec[tokens[0]] = np.asarray(tokens[1:], dtype='float32')
         
         self.word2vec = word2vec
@@ -127,16 +134,21 @@ class Tokenizer(object):
         if os.path.exists(dat_fname):
             print("use exist embedding file")
             embedding_matrix = pickle.load(open(dat_fname, 'rb'))
-            print(embedding_matrix)
         elif self.emb_type == 'random':
-            embedding_matrix = np.zeros((len(word2idx) + 2, 300))  # idx 0 and len(word2idx)+1 are all-zeros
+            embedding_matrix = np.zeros((len(word2idx) + 2, 300))
             pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
         elif self.emb_type == 'tencent':
-            print("************, do tencent embedding")
-            embedding_matrix = np.zeros((len(word2idx) + 2, 200))  # idx 0 and len(word2idx)+1 are all-zeros
+            embedding_matrix = np.zeros((len(word2idx) + 2, 200))
+            embedding_matrix[0] = np.zeros(200) # Padding 
+            unknown_words_vector = np.random.rand(200)
+            embedding_matrix[len(word2idx)+1] = unknown_words_vector  # Unknown words 
+            
+            for word, idx in word2idx.items():
+                if word in self.word2vec.keys():
+                    embedding_matrix[idx] = self.word2vec[word]
+                else:
+                    embedding_matrix[idx] = unknown_words_vector
 
-            for word, i in word2idx.items():
-                embedding_matrix[i] = self.word2vec[word]
             pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
         elif self.emb_type == 'bert':
             pass
@@ -178,7 +190,7 @@ class Tokenizer(object):
         if self.lower:
             text_lower = text.lower()
         words = list(text_lower)
-        unknown_idx = len(self.word2idx)+1
+        unknown_idx = 0
         sequence = [self.word2idx[w] if w in self.word2idx else unknown_idx for w in words]
         if len(sequence) == 0:
             sequence = [0]
@@ -188,10 +200,16 @@ class Tokenizer(object):
         tmp_list = self.__pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
         return [ self.embedding_matrix[item] for item in tmp_list]
 
+    def encode_label():
+        pass
+    
+    def dataset():
+        pass
+
 
 if __name__ == '__main__':
     emb_type = 'tencent'
-    tokenizer = Tokenizer(origin_file = "a.txt", max_seq_len=512, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
+    tokenizer = Tokenizer(origin_file = "a.txt", max_seq_len=32, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
     text = "中文自然语言处理，Natural Language Process"
     print(tokenizer.word2idx)
     print(tokenizer.idx2word)
