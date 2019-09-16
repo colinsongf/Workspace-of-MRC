@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-# file: data_utils.py
 # author: apollo2mars <apollo2mars@gmail.com>
 
-# problem: vocabulary not saved
+# problems: load other embedding
 # pickle hdf5
 
 import pickle
@@ -15,31 +14,26 @@ sys.path.append(path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 class Tokenizer(object):
-    """ Tokenizer for Machine Reading Comprehension
 
-    1. Input : max length of context
-    2. Get vocabulary dict : self.word2idx and self.idx2word
-    3. Get word2vec
-    3. Get
-        if embedding matrix exits, load from exit file
-        else build new embedding matrix
-    """
-    def __init__(self, origin_file, max_seq_len, emb_type, dat_fname):
+    def __init__(self, corpus_files, emb_type):
+        """ Tokenizer for Machine Reading Comprehension
+        :param corpus_files: origin corpus for build tokenizer's worid2idx and idx2word
+        :param emb_type: choice embedding type for tokenizer's embedding matrix
         """
-        :param origin_file: corpus for fit word2idx and idx2word
-        :param max_seq_len:
-        :param emb_type:
-        :param dat_fname: embedding matrix file name
-        """
-
-        self.max_seq_len = max_seq_len
         self.emb_type = emb_type.lower()
-        self.dat_path = dat_fname
-
         self.lower = True
 
-        lines = open(origin_file, 'r', encoding='utf-8', newline='\n', errors='ignore')
-        self.fit_text = ' '.join(lines)
+        tmp_text = ''
+        for fname in corpus_files:
+            if fname.strip() == '':
+                continue
+            fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
+            lines = fin.readlines()
+            fin.close()
+            for line in lines:
+                text_raw = line[0].lower().strip()
+                tmp_text += text_raw + " "
+        self.fit_text = tmp_text
 
         self.embedding_info = {}
         self.word2idx = {}
@@ -47,11 +41,17 @@ class Tokenizer(object):
         self.word2vec = {}  # {"Apple":[1,2,2,3,5], "Book":"1,2,1,1,1"}
         self.embedding_matrix = []
 
+        # add <PAD> <UNK>
+        self.word2idx['<PAD>'] = 0
+        self.word2idx['<UNK>'] = 1
+        self.idx2word[0] = self.word2idx['<PAD>']
+        self.idx2word[1] = self.word2idx['<UNK>']
+
         self.__set_embedding_info()
         self.__set_vocabulary(input_text=self.fit_text)
         self.__set_word2vec(embedding_path=self.embedding_files['Static'][self.emb_type],
                             word2idx=self.word2idx)
-        self.__set_embedding_matrix(word2idx=self.word2idx, dat_fname=self.dat_path)
+        self.__set_embedding_matrix(word2idx=self.word2idx)
         
     def __set_embedding_info(self):
         """
@@ -89,8 +89,8 @@ class Tokenizer(object):
         count = Counter(tmp_text)
 
         for idx, item in enumerate(count):
-            self.word2idx[item] = idx + 1  # must + 1
-            self.idx2word[idx + 1] = item
+            self.word2idx[item] = idx + 2
+            self.idx2word[idx + 2] = item
 
     def __set_word2vec(self, embedding_path, word2idx=None):
         """
@@ -125,10 +125,9 @@ class Tokenizer(object):
         
         self.word2vec = word2vec
 
-    def __set_embedding_matrix(self, word2idx, dat_fname):
+    def __set_embedding_matrix(self, word2idx):
         """
         :param word2idx: word2idx
-        :param dat_fname: embedding matrix file path
         :return:
         """
         if os.path.exists(dat_fname):
@@ -143,6 +142,14 @@ class Tokenizer(object):
             unknown_words_vector = np.random.rand(200)
             embedding_matrix[len(word2idx)+1] = unknown_words_vector  # Unknown words 
             
+        if self.emb_type == 'random':
+            embedding_matrix = np.zeros((len(word2idx) + 2, 300))
+        elif self.emb_type == 'tencent':
+            embedding_matrix = np.zeros((len(word2idx) + 2, 200))
+            unknown_words_vector = np.random.rand(200)
+            embedding_matrix[self.word2idx['<UNK>']] = unknown_words_vector  # Unknown words
+            embedding_matrix[self.word2idx['<PAD>']] = np.zeros(200) # Padding
+
             for word, idx in word2idx.items():
                 if word in self.word2vec.keys():
                     embedding_matrix[idx] = self.word2vec[word]
@@ -150,6 +157,7 @@ class Tokenizer(object):
                     embedding_matrix[idx] = unknown_words_vector
 
             pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
+
         elif self.emb_type == 'bert':
             pass
        
@@ -197,8 +205,21 @@ class Tokenizer(object):
         if reverse:
             sequence = sequence[::-1]
 
-        tmp_list = self.__pad_and_truncate(sequence, self.max_seq_len, padding=padding, truncating=truncating)
-        return [ self.embedding_matrix[item] for item in tmp_list]
+
+def build_tokenizer(corpus_files, corpus_type, embedding_type):
+    """
+    corpus files and corpus type can merge
+    """
+    tokenizer_path = corpus_type + "_" + embedding_type + "_" + "tokenizer.dat"
+    if os.path.exists(tokenizer_path):
+        print('load exist tokenizer:', tokenizer_path)
+        tokenizer = pickle.load(open(tokenizer_path, 'rb'))
+    else:
+        print('build new tokenizer:', tokenizer_path)
+        tokenizer = Tokenizer(corpus_files=corpus_files,
+                              emb_type=embedding_type)
+        pickle.dump(tokenizer, open(tokenizer_path, 'wb'))
+    return tokenizer
 
     def encode_label():
         pass
@@ -208,9 +229,13 @@ class Tokenizer(object):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     emb_type = 'tencent'
     tokenizer = Tokenizer(origin_file = "a.txt", max_seq_len=32, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
     text = "中文自然语言处理，Natural Language Process"
     print(tokenizer.word2idx)
     print(tokenizer.idx2word)
     print(tokenizer.encode("中文"))
+=======
+    build_tokenizer(['corpus.txt'], 'entity', 'tencent')
+>>>>>>> 62b1a3da3dd9d5b08da5682e15afd7387dd4588b

@@ -12,94 +12,92 @@
 
 # Dataset
 
-| Dataset                                                      | Lang | Query | Doc   | query source    | doc source   | Answer                 | SOTA                                                         |
-| ------------------------------------------------------------ | ---- | ----- | ----- | --------------- | ------------ | ---------------------- | ------------------------------------------------------------ |
-| CNN/Daily Mail                                               | ENG  | 1.4M  | 300K  | Close           | News         | Fill in entity         | DeepMind Q&A Dataset 是一个经典的机器阅读理解数据集，分为两个部分：  CNN：~90k 美国有线电视新闻网（CNN）的新闻文章，~380k 问题； Daily Mail：~197k DailyMail 新闻网的新闻文章（不是邮件正文），~879k 问题。 论文链接：http://www.paperweekly.site/papers/915 数据集链接：http://cs.nyu.edu/~kcho/DMQA/ |
-| CBT                                                          |      |       |       |                 |              |                        |                                                              |
-| CLOTH                                                        |      |       |       |                 |              |                        |                                                              |
-| LAMBADA                                                      |      |       |       |                 |              |                        |                                                              |
-| Who-did-What                                                 |      |       |       |                 |              |                        |                                                              |
-| CliCR                                                        |      |       |       |                 |              |                        |                                                              |
-| HLF-RC                                                       | CHN  | 100K  | 28K   | Close           | Fairy/news   | Fill in word           |                                                              |
-| RACE                                                         | ENG  | 870K  | 50K   | english exam    | english exam | Multi choice           |                                                              |
-| MCTest                                                       |      |       |       |                 |              | Multi choice           |                                                              |
-| SQuAD 1                                                      | ENG  | 100K  | 536   |                 |              | Span                   | BERT + DAE + AoA (ensemble) Joint Laboratory of HIT and iFLYTEK Research |
-| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)     |      |       |       |                 |              | Span                   | 一共有107,785问题，以及配套的 536 篇文章  数据集的具体构建如下：  文章是随机sample的wiki百科，一共有536篇wiki被选中。而每篇wiki，会被切成段落，最终生成了23215个自然段。 |
-| NEWSQA                                                       |      |       |       |                 |              | span                   |                                                              |
-| TriviaQA                                                     | ENG  | 40K   | 660K  | Trivia websites | Wiki/Web doc | Span/substring of word |                                                              |
-| DuoRC                                                        |      |       |       |                 |              | Span                   |                                                              |
-| MS-MARCO                                                     | ENG  | 100K  | 200K  | User Logs       | Web doc      | Summary by human       | MARCO 提供多篇来自搜索结果的网页文档，系统需要通过阅读这些文档来回答用户提出的问题。但是，文档中是否含有答案，以及答案具体在哪一篇文档中，都需要系统自己来判断解决。更有趣的是，有一部分问题无法在文档中直接找到答案，需要阅读理解模型自己做出判断；MARCO 也不限制答案必须是文档中的片段，很多问题的答案必须经过多篇文档综合提炼得到 |
-| DuReader                                                     | ENG  | 200K  | 1000K | User Logs       | Web doc/CQA  | Summary  by human      |                                                              |
-| MRQA2019                                                     |      |       |       |                 |              |                        |                                                              |
-| CMRC 2018                                                    |      |       |       |                 |              |                        | CMRC 2018是哈工大讯飞联合实验室发布的中文机器阅读理解数据。根据给定问题，系统需要从篇章中抽取出片段作为答案，形式与SQuAD相同 |
-| DRCD                                                         |      |       |       |                 |              |                        | DRCD数据集由中国台湾台达研究院发布，其形式与SQuAD相同，是基于繁体中文的抽取式阅读理解数据集 |
-| NLPCC-DBQA                                                   |      |       |       |                 |              |                        | NLPCC-DBQA 是由国际自然语言处理和中文计算会议 NLPCC 于 2016 年举办的评测任务，其目标是选择能够回答问题的答案 |
-| Amazon question/answer data                                  |      |       |       |                 |              |                        | 亚马逊产品的问答http://jmcauley.ucsd.edu/data/amazon/qa/     |
-| Deepmind Question Answering Corpus                           |      |       |       |                 |              |                        | https://github.com/deepmind/rc-data关于维基百科文章的问答:   |
-| Program Induction by Rationale Generation : Learning to Solve and Explain Algebraic Word Problems |      |       |       |                 |              |                        | DeepMind 和牛津大学共同打造的代数问题数据集 AQuA（Algebra Question Answering）。 论文链接：http://www.paperweekly.site/papers/913 数据集链接：https://github.com/deepmind/AQuA |
-| LSDSem 2017 Shared Task: The Story Cloze Test                |      |       |       |                 |              |                        | Story Cloze Test：人工合成的完形填空数据集。 论文链接：http://www.paperweekly.site/papers/917 数据集链接：http://cs.rochester.edu/nlp/rocstories/ |
-| SougoQA                                                      |      |       |       |                 |              |                        | http://task.www.sogou.com/cips-sogou_qa/                     |
-|                                                              |      |       |       |                 |              |                        |                                                              |
-|                                                              |      |       |       |                 |              |                        |                                                              |
+## Challenge
 
-| Mulit Choice QA            |                                                              |      |
-| -------------------------- | ------------------------------------------------------------ | ---- |
-| Looking Beyond the surface | 多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 |      |
-|                            |                                                              |      |
-|                            |                                                              |      |
+| New        | Tips  |
+| ---------- | ----- |
+| CIPS-SOGOU | DGCNN |
+|            |       |
+|            |       |
 
 
 
-| Free Answer                                                  | SOTA                                                         | Tips                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| bAbI                                                         |                                                              |                                                              |
-| [MARCO V2](http://www.msmarco.org/leaders.aspx)              | Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |                                                              |
-| SearchQA                                                     |                                                              |                                                              |
-| NarrativeQA                                                  | https://www.leiphone.com/news/201712/mjCYZ8WTiREqja6L.html https://github.com/deepmind/narrativeqa | DeepMind认为目前的阅读理解数据集均存在着一定的局限性，包括：数据集小、不自然、只需要一句话定位回答的必须信息，等等。因而 Deepmind 认为，在这些数据集上的测试可能都是一个不能真实反映机器阅读理解能力的伪命题。 |
-| DuReader                                                     |                                                              |                                                              |
-| Dataset and Neural Recurrent Sequence Labeling Model for Open-Domain Factoid Question Answering |                                                              | 百度深度学习实验室创建的中文开放域事实型问答数据集。 论文链接：http://www.paperweekly.site/papers/914 数据集链接：http://idl.baidu.com/WebQA.html |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
+## Key Dataset
 
-| Factoid QA                                                   | SOTA | Tips                                                         |
-| ------------------------------------------------------------ | ---- | ------------------------------------------------------------ |
-| https://github.com/brmson/dataset-factoid-webquestions http://www.cs.cmu.edu/~ark/QA-data |      |                                                              |
-| [https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/](https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/) |      | Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus  将 KB 三元组转化为问句 |
-|                                                              |      |                                                              |
+| Mulit Type                                                   | Types |      |
+| ------------------------------------------------------------ | ----- | ---- |
+| MT1 百度深度学习实验室;中文开放域事实型问答数据集 [paper](Dataset and Neural Recurrent Sequence Labeling Model for Open-Domain Factoid Question Answering) [dataset]() |       |      |
+|                                                              |       |      |
+|                                                              |       |      |
 
-| Retrieval QA | SOTA | Tips |
-| ------------ | ---- | ---- |
-|              |      |      |
-|              |      |      |
-|              |      |      |
 
-| KBQA                                                    | SOTA | Tips                                                         |
-| ------------------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 知识库 :　Freebase, DBpedia, Wikipedia, yago, satori    |      |                                                              |
-| ATIS                                                    |      |                                                              |
-| GeoQuery                                                |      |                                                              |
-| QALD Series                                             |      |                                                              |
-| Free 917                                                |      |                                                              |
-| Web Questions                                           |      |                                                              |
-| Web QuestionsSP                                         |      |                                                              |
-| SimpleQuestions                                         |      |                                                              |
-| WikiMovies                                              |      |                                                              |
-| TriviaQA                                                |      |                                                              |
-| Semantic Parsing on Freebase from Question-Answer Pairs |      | 文章发表在 EMNLP-13，The Stanford NLP Group 是世界领先的 NLP 团队。 他们在这篇文章中引入了 WebQuestions 这个著名的问答数据集，WebQuestion 主要是借助 Google Suggestion 构造的 依靠 Freebase（一个大型知识图谱）中的实体来回答，属于事实型问答数据集（比起自然语言，容易评价结果优劣） 有 6642 个问答对 最初，他们构造这个数据集是为了做 Semantic Parsing，以及发布自己的系统 SEMPRE system。 论文链接：http://www.paperweekly.site/papers/827 数据集链接：http://t.cn/RWPdQQO |
-| Graph Questions                                         |      | On Generating Characteristic-rich Question Sets for QA Evaluation 文章发表在 EMNLP 2016，本文详细阐述了 GraphQuestions 这个数据集的构造方法，强调这个数据集是富含特性的（Characteristic-rich）。  数据集特点：  基于 Freebase，有 5166 个问题，涉及 148 个不同领域； 从知识图谱中产生 Minimal Graph Queries，再将 Query 自动转换成规范化的问题； 由于 2，Logical Form 不需要人工标注，也不存在无法用 Logical Form 表示的问题； 使用人工标注的办法对问题进行 paraphrasing，使得每个问题有多种表述方式（答案不变），主要是 Entity-level Paraphrasing，也有 sentence-level； Characteristic-rich 指数据集提供了问题在下列维度的信息，使得研究者可以对问答系统进行细粒度的分析, 找到研究工作的前进方向：关系复杂度（Structure Complexity），普遍程度（Commonness），函数（Function），多重释义（Paraphrasing），答案候选数（Answer Cardinality）。 论文链接：http://www.paperweekly.site/papers/906 数据集链接：https://github.com/ysu1989/GraphQuestions |
-|                                                         |      |                                                              |
+
+## Close/Factoid/Multi Choice
+
+| Dataset                                                      | Lang | Query             | Doc              | query source                    | doc source   | Type                                                         |
+| ------------------------------------------------------------ | ---- | ----------------- | ---------------- | ------------------------------- | ------------ | ------------------------------------------------------------ |
+| Deep Mind [CNN/Daily Mail](http://cs.nyu.edu/~kcho/DMQA/)    | ENG  | 1.4M(380K + 879K) | 300K(90k + 197K) | Close                           | News         | Fill in entity                                               |
+| CBT                                                          |      |                   |                  |                                 |              |                                                              |
+| CLOTH                                                        |      |                   |                  |                                 |              |                                                              |
+| LAMBADA                                                      |      |                   |                  |                                 |              |                                                              |
+| Who-did-What                                                 |      |                   |                  |                                 |              |                                                              |
+| CliCR                                                        |      |                   |                  |                                 |              |                                                              |
+| HLF-RC                                                       | CHN  | 100K              | 28K              | Close                           | Fairy/news   | Fill in word                                                 |
+| RACE                                                         | ENG  | 870K              | 50K              | english exam                    | english exam | Multi choice                                                 |
+| MCTest                                                       |      |                   |                  |                                 |              | Multi choice                                                 |
+| SQuAD 1                                                      | ENG  | 100K              | 536              |                                 |              | Span                                                         |
+| [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)     |      |                   |                  |                                 |              | Span                                                         |
+| NEWSQA                                                       |      |                   |                  |                                 |              | span                                                         |
+| TriviaQA                                                     | ENG  | 40K               | 660K             | Trivia websites                 | Wiki/Web doc | Span/substring of word                                       |
+| DuoRC                                                        |      |                   |                  |                                 |              | Span                                                         |
+| MS-MARCO<br />答案不限制在文中；多文档                       | ENG  | 100K              | 200K             | User Logs                       | Web doc      | Summary by human                                             |
+| DuReader                                                     | ENG  | 200K              | 1000K            | User Logs                       | Web doc/CQA  | Summary  by human                                            |
+| MRQA2019                                                     |      |                   |                  |                                 |              |                                                              |
+| 哈工大-讯飞<br />CMRC 2018<br />形式与SQuAD相同              |      |                   |                  |                                 |              |                                                              |
+| 中国台湾台达研究院<br />DRCD<br />形式与SQuAD相同，是基于繁体中文的抽取式阅读理解数据集 |      |                   |                  |                                 |              |                                                              |
+| 亚马逊产品的问答 [data](http://jmcauley.ucsd.edu/data/amazon/qa/) |      |                   |                  |                                 |              |                                                              |
+| [Deepmind Question Answering Corpus](https://github.com/deepmind/rc-data) |      |                   |                  |                                 |              |                                                              |
+| DeepMind 和牛津大学<br />Program Induction by Rationale Generation : Learning to Solve and Explain Algebraic Word Problems [dataset](https://github.com/deepmind/AQuA) |      |                   |                  |                                 |              |                                                              |
+| LSDSem 2017 Shared Task: The Story Cloze Test [dataset](http://cs.rochester.edu/nlp/rocstories/) |      |                   |                  | Close                           |              |                                                              |
+| [SougoQA](http://task.www.sogou.com/cips-sogou_qa/)          |      |                   |                  |                                 |              |                                                              |
+| CMU [factoid webquestion](https://github.com/brmson/dataset-factoid-webquestions)<br/><br/>[QA-Data](http://www.cs.cmu.edu/~ark/QA-data) |      |                   |                  | Factoid QA                      |              |                                                              |
+| microsoft<br />[use-of-external-knowledge-of-factoid-qa/](https://www.microsoft.com/en-us/research/publication/the-use-of-external-knowledge-of-factoid-qa/)<br />将 KB 三元组转化为问句 |      |                   |                  | Factoid<br />External Knowledge |              |                                                              |
+| Looking Beyond the surface                                   |      |                   |                  | Mulit Choice QA                 |              | 多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 |
+
+## Free Answer
+
+| Free Answer                                     | SOTA                                                         | Tips                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| bAbI                                            |                                                              |                                                              |
+| [MARCO V2](http://www.msmarco.org/leaders.aspx) | Enriched BERT base + AOA index V1** Ming Yan of Alibaba Damo NLP |                                                              |
+| SearchQA                                        |                                                              |                                                              |
+| NarrativeQA                                     | https://www.leiphone.com/news/201712/mjCYZ8WTiREqja6L.html https://github.com/deepmind/narrativeqa | DeepMind认为目前的阅读理解数据集均存在着一定的局限性，包括：数据集小、不自然、只需要一句话定位回答的必须信息，等等。因而 Deepmind 认为，在这些数据集上的测试可能都是一个不能真实反映机器阅读理解能力的伪命题。 |
+| DuReader                                        |                                                              |                                                              |
+|                                                 |                                                              |                                                              |
+
+## KBQA
+
+| KBQA                                                         | Tips                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 知识库 :　Freebase, DBpedia, Wikipedia, yago, satori         |                                                              |
+| ATIS                                                         |                                                              |
+| GeoQuery                                                     |                                                              |
+| QALD Series                                                  |                                                              |
+| Free 917                                                     |                                                              |
+| Web Questions                                                |                                                              |
+| Web QuestionsSP                                              |                                                              |
+| SimpleQuestions                                              |                                                              |
+| WikiMovies                                                   |                                                              |
+| TriviaQA                                                     |                                                              |
+| [Web Question]()Semantic Parsing on Freebase from Question-Answer Pairs<br />[dataset](http://t.cn/RWPdQQO) | Standford;EMNLP-13 他们在这篇文章中引入了 WebQuestions 这个著名的问答数据集，WebQuestion 主要是借助 Google Suggestion 构造的 依靠 Freebase（一个大型知识图谱）中的实体来回答，属于事实型问答数据集（比起自然语言，容易评价结果优劣） 有 6642 个问答对 最初，他们构造这个数据集是为了做 Semantic Parsing，以及发布自己的系统 SEMPRE system |
+| Graph Questions <br />[paper](On Generating Characteristic-rich Question Sets for QA Evaluation) [dataset](https://github.com/ysu1989/GraphQuestions) | 文章发表在 EMNLP 2016，本文详细阐述了 GraphQuestions 这个数据集的构造方法，强调这个数据集是富含特性的（Characteristic-rich）。  数据集特点：  基于 Freebase，有 5166 个问题，涉及 148 个不同领域； 从知识图谱中产生 Minimal Graph Queries，再将 Query 自动转换成规范化的问题； 由于 2，Logical Form 不需要人工标注，也不存在无法用 Logical Form 表示的问题； 使用人工标注的办法对问题进行 paraphrasing，使得每个问题有多种表述方式（答案不变），主要是 Entity-level Paraphrasing，也有 sentence-level； Characteristic-rich 指数据集提供了问题在下列维度的信息，使得研究者可以对问答系统进行细粒度的分析, 找到研究工作的前进方向：关系复杂度（Structure Complexity），普遍程度（Commonness），函数（Function），多重释义（Paraphrasing），答案候选数（Answer Cardinality） |
+| NLPCC-DBQA                                                   | NLPCC 2016 的评测任务;                                       |
 
 | RRC                                  | SOTA | Tips                                                         |
 | ------------------------------------ | ---- | ------------------------------------------------------------ |
 | https://arxiv.org/pdf/1904.02232.pdf |      | this paper explores the potential of turning customer reviews into a large source of knowledge that can be exploited to answer user questions |
 |                                      |      |                                                              |
 |                                      |      |                                                              |
-
-|                |                                                              |                                                              |
-| -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                |                                                              |                                                              |
-| GraphQuestions | 文章发表在 EMNLP 2016，本文详细阐述了 GraphQuestions 这个数据集的构造方法，强调这个数据集是富含特性的（Characteristic-rich）。 | 数据集特点：  基于 Freebase，有 5166 个问题，涉及 148 个不同领域； 从知识图谱中产生 Minimal Graph Queries，再将 Query 自动转换成规范化的问题； 由于 2，Logical Form 不需要人工标注，也不存在无法用 Logical Form 表示的问题； 使用人工标注的办法对问题进行 paraphrasing，使得每个问题有多种表述方式（答案不变），主要是 Entity-level Paraphrasing，也有 sentence-level； Characteristic-rich 指数据集提供了问题在下列维度的信息，使得研究者可以对问答系统进行细粒度的分析, 找到研究工作的前进方向：关系复杂度（Structure Complexity），普遍程度（Commonness），函数（Function），多重释义（Paraphrasing），答案候选数（Answer Cardinality）。 |
-|                |                                                              |                                                              |
 
 
 
@@ -114,54 +112,66 @@
 - BLEU
 
 # General Architecture
-+ Embedding
-    + One-hot
-    + Static Embedding
-        + Word2Vec
-        + Glove
-    + Dynamic Embedding(Contextualized based)
-        + Cove
-        + ELMo
-        + GPT
-        + BERT
-        + MASS
-        + UniLM
-        + XLNET
-    + Multiple Granularity
-        + Character Embedding
-        + POS
-        + NER
-        + Binary Feature of Exact Match (EM)
-        + Query-Category    
-+ Feature Extraction
-    + CNN
-    + RNN
-    + Transformer
-+ Context-Question Interaction
-    + Un Attn
-    + Bi Attn
-    + One-hop Interaction
-    + Multi-hop Interaction
-+ Answer Prediction
-    + Word Predictor
-    + Opinion Selector
-    + Span Extractor
-    + Answer Generator
-    + **Ranker**
+
+## Embedding
+
++ One-hot
++ Static Embedding
+    + Word2Vec
+    + Glove
++ Dynamic Embedding(Contextualized based)
+    + Cove
+    + ELMo
+    + GPT
+    + BERT
+    + MASS
+    + UniLM
+    + XLNET
++ Multiple Granularity
+    + Character Embedding
+    + POS
+    + NER
+    + Binary Feature of Exact Match (EM)
+    + Query-Category    
+
+## Feature Extraction
+
++ CNN
++ RNN
++ Transformer
+
+## Context-Question Interaction
+
++ Un Attn
++ Bi Attn
++ One-hop Interaction
++ Multi-hop Interaction
+
+## Answer Prediction
+
++ Word Predictor
++ Opinion Selector
++ Span Extractor
++ Answer Generator
++ **Ranker**
 
 # Solutions
+
+## Close Type
 
 | Close Type                                                   | Tips                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | A Corpus and Evaluation Framework for Deeper Understanding of Commonsense Stories | ROCStories dataset for story cloze test. 论文链接：http://www.paperweekly.site/papers/918 数据集链接：http://cs.rochester.edu/nlp/rocstories/ |
 |                                                              |                                                              |
-|                                                              |                                                              |
+
+## Multi Choice
 
 | Multi Choice                                                 | Tips                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Looking Beyond the surface: A Chanllenge Set for Reading Comprehension over Multiple Sentences | 特点:  多选题 问题的答案来自篇章中的多条语句 数据集来自7个不同的领域 基准算法:  Random IR SurfaceIR SemanticLP BiDAF SOTA  SurfaceIR 结构的F1 值 相较人类结果 差 20个百分点 |
 |                                                              |                                                              |
-|                                                              |                                                              |
+
+## Span Extraction
 
 | Span Extraction                        | Tips |
 | -------------------------------------- | ---- |
@@ -177,11 +187,15 @@
 |                                                   |                                                              |
 |                                                   |                                                              |
 
+## Factoid QA
+
 | Factoid QA | Tips |
 | ---------- | ---- |
 |            |      |
 |            |      |
 |            |      |
+
+## Retrieval QA
 
 | Retrieval QA | Tips |
 | ------------ | ---- |
@@ -189,11 +203,21 @@
 |              |      |
 |              |      |
 
+## KBQA
+
 | KBQA | Tips |
 | ---- | ---- |
 |      |      |
 |      |      |
 |      |      |
+
+## NLU + NLG
+
+|      |      |      |
+| ---- | ---- | ---- |
+|      |      |      |
+|      |      |      |
+|      |      |      |
 
 
 

@@ -13,9 +13,12 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import pickle
 import argparse
 import logging
-from dataset import BRCDataset
+
+from utils.Dataset_DuReader import Dataset_DuReader
+from utils.Tokenizer import buil
 from vocab import Vocab
 from rc_model import RCModel
+
 import time
 
 def parse_args():
