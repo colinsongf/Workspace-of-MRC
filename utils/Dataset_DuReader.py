@@ -76,7 +76,7 @@ class Dataset_DuReader(object):
                                 recall_wrt_question = float(correct_preds) / len(question_tokens)
 
                             para_infos.append((para_tokens, recall_wrt_question, len(para_tokens)))
-                        para_infos.sort(key=lambda x: (-x[1], x[2]))  ## 按照 recall_wrt_question 排序， 相同的recall_wrt_question 按照 para_tokens 排序
+                        para_infos.sort(key=lambda x: (-x[1], x[2]))  # 按照 recall_wrt_question 排序， 相同的recall_wrt_question 按照 para_tokens 排序
 
                         fake_passage_tokens = []
                         for para_info in para_infos[:1]:  # 遍历每个段落最正确的答案
@@ -179,10 +179,6 @@ class Dataset_DuReader(object):
                     batch_data['p_input_mask'].append([0] * self.max_p_len)
                     batch_data['p_segment_ids'].append([0] * self.max_p_len)
 
-        # padding data for batch_data question_token_ids, passage_token_ids
-        # batch_data, padded_p_len, padded_q_len = self._dynamic_padding(batch_data, pad_id)
-        # start_id
-        # end_id
         for sample in batch_data['raw_data']:
             if 'answer_passages' in sample and len(sample['answer_passages']):
                 gold_passage_offset = self.max_p_len * sample['answer_passages'][0]
@@ -281,14 +277,14 @@ class Dataset_DuReader(object):
             yield self._one_mini_batch(data, batch_indices, pad_id)
 
 
-def build_dataset():
-
-
 if __name__ == '__main__':
     prefix_path = 'corpus/dureader/preprocessed/preprocessed/'
     train_files = [prefix_path + 'trainset/search.train.json']
     dev_files = [prefix_path + 'devset/search.train.json']
     test_files = [prefix_path + 'testset/search.train.json']
 
-    dataset = DuReaderDataset(max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
+    dataset = Dataset_DuReader(max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
 
+    train_batches = dataset.gen_mini_batches('train', 32, pad_id, shuffle=True)
+    for batch in train_batches:
+        print(batch)

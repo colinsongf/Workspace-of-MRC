@@ -7,20 +7,13 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 import tensorflow as tf
-<<<<<<< HEAD
-import  numpy as np
 
-=======
->>>>>>> 6b945f153e4c06b55dc990fab32bcf6ef7a49337
 from time import strftime, localtime
 
+from span_extraction.models import BiDAF
 from utils.Tokenizer import build_tokenizer
-from span_extraction.models import BIDAF
-<<<<<<< HEAD
-from utils.Tokenizer import build_tokenizer
-=======
 from utils.DatasetSQuAD2 import DatasetSQuAD2
->>>>>>> 6b945f153e4c06b55dc990fab32bcf6ef7a49337
+from utils.Dataset_DuReader import Dataset_DuReader
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -31,34 +24,23 @@ class Instructor:
     def __init__(self, opt):
         self.opt = opt
 
-<<<<<<< HEAD
-        # pre-processing : tokenizer
-        tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
-
-        # build model
-        self.model = opt.model_class(self.opt, tokenizer)
-
-        # build dataset
-        self.train_set, self.dev_set, self.test_set, self.predict_set = opt.dataset()
-=======
         # build tokenizer
-        tokenizer = build_tokenizer(corpus_files=[opt.dataset['train'], opt.dataset['test']], max_seq_len=512, corpus_type='qa', embedding_type='tencent')
+        tokenizer = build_tokenizer(corpus_files=[opt.dataset_file['train'], opt.dataset_file['test']], max_seq_len=512, corpus_type='qa', embedding_type='tencent')
 
         # build model and session
-        self.model = BIDAF(self.opt, tokenizer)
+        self.model = BiDAF(self.opt, tokenizer)
         self.session = self.model.session
 
         # dataset
-        self.trainset = opt.dataset_class(opt.dataset['train'], tokenizer)
-        self.testset = opt.dataset_class(opt.dataset['test'], tokenizer)
+        self.trainset = opt.dataset_class(opt.dataset_file['train'], tokenizer)
+        self.testset = opt.dataset_class(opt.dataset_file['test'], tokenizer)
 
         if self.opt.do_predict is True:
-            self.predictset = DatasetSQuAD2(opt.dataset_file['predict'], tokenizer, 'entity', self.opt.label_list)
+            self.predictset = opt.dataset_class(opt.dataset_file['predict'], tokenizer, 'entity', self.opt.label_list)
 
         # build saver
         self.saver = tf.train.Saver(max_to_keep=1)
->>>>>>> 6b945f153e4c06b55dc990fab32bcf6ef7a49337
-        
+
     def _print_opts(self):
         pass
 
@@ -162,8 +144,12 @@ def main():
             'test':}
     }
 
+    dataset_classes = {
+        'dureader':Dataset_DuReader,
+    }
+
     model_classes = {
-        'bidaf': BIDAF,
+        'bidaf': BiDAF,
         # 'mlstm': MLSTM,
         # 'bert': BERT,
         # 'bert_bidaf' : BERT_BIDAF
@@ -177,7 +163,8 @@ def main():
         'adam':tf.train.AdamOptimizer
     }
 
-    args.dataset = dataset_files[args.dataset]
+    args.dataset_file = dataset_files[args.dataset]
+    args.dataset_class = dataset_classes[args.dataset]
     args.model = model_classes[args.model]
     args.input_cols = input_cols[args.input_cols]
     args.optimizer = optimizers[args.optimizer]

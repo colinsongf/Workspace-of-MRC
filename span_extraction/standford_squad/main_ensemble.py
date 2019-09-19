@@ -62,7 +62,7 @@ tf.app.flags.DEFINE_bool("do_char_embed", True, "Include char embedding -True/Fa
 tf.app.flags.DEFINE_bool("add_highway_layer", True, "Add highway layer to concatenated embeddings -True/False")
 tf.app.flags.DEFINE_bool("cnn_encoder", False, "Add CNN Encoder Layer -True/False")
 tf.app.flags.DEFINE_bool("rnet_attention", True, "Perform RNET QP and SM attention-True/False")
-tf.app.flags.DEFINE_bool("bidaf_attention", False, "Use BIDAF Attention-True/False")
+tf.app.flags.DEFINE_bool("bidaf_attention", False, "Use BiDAF Attention-True/False")
 tf.app.flags.DEFINE_bool("answer_pointer_RNET", True, "Use Answer Pointer from RNET-True/False")
 tf.app.flags.DEFINE_bool("smart_span", True, "Select start and end idx based on smart conditions-True/False")
 
@@ -76,7 +76,7 @@ tf.app.flags.DEFINE_integer("window_width", 5, "Kernel size for char cnn") #as s
 ## Hyperparameters for CNN Encoder
 tf.app.flags.DEFINE_integer("filter_size_encoder", 20, "Size of filter for cnn encoder")
 
-## Hyperparameters for BIDAF
+## Hyperparameters for BiDAF
 tf.app.flags.DEFINE_integer("hidden_size_modeling", 150, "Size of modeling layer")  #
 
 # How often to print, save, eval

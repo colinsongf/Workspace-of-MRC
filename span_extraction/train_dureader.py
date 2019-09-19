@@ -52,7 +52,7 @@ def parse_args():
                                 help='train epochs')
 
     model_settings = parser.add_argument_group('model settings')
-    model_settings.add_argument('--algo', choices=['BIDAF', 'MLSTM'], default='BIDAF',
+    model_settings.add_argument('--algo', choices=['BiDAF', 'MLSTM'], default='BiDAF',
                                 help='choose the algorithm to use')
     model_settings.add_argument('--embed_size', type=int, default=300,
                                 help='size of the embeddings')

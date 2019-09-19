@@ -264,7 +264,7 @@ class QAModel(object):
             blended_reps = tf.concat([context_hiddens, v_P, h_P], axis=2)  # (batch_size, context_len, hidden_size*6)
         elif self.FLAGS.bidaf_attention:
             """
-            BIDAF ATTENTION AND MODELING LAYER  
+            BiDAF ATTENTION AND MODELING LAYER  
             """
             attn_layer = BiDAF(self.keep_prob, self.FLAGS.hidden_size_encoder * 2)
             attn_output = attn_layer.build_graph(question_hiddens, self.qn_mask, context_hiddens, self.context_mask)  # attn_output is shape (batch_size, context_len, hidden_size_encoder*6)
