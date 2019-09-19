@@ -42,9 +42,20 @@ class Dataset_DuReader(object):
             data_path: the data file to load
         """
         with open(data_path) as fin:
+            """
+            sampel structure
+            answer_spans
+            answer_passages
+            question_tokens
+            passages [ passages : ...
+                       is_selected : ...]
+            """
             data_set = []
             for lidx, line in enumerate(fin):  # 读一个文件
                 sample = json.loads(line.strip())  # 读单条数据
+
+                # 不满足条件的数据清理掉
+
                 if train:
                     if len(sample['answer_spans']) == 0:  # 没有答案这个字段
                         continue
@@ -84,11 +95,6 @@ class Dataset_DuReader(object):
 
                         sample['passages'].append({'passage_tokens': fake_passage_tokens})
 
-                # sample['answer_spans']
-                # sample['answer_passages']
-                # sample['question_tokens']
-                # sample['passage'] [passage_tokens train : segmented_paragraphs(right answer),
-                #                                   other : fake_answer_tokens]
                 data_set.append(sample)
         return data_set
 
@@ -278,13 +284,19 @@ class Dataset_DuReader(object):
 
 
 if __name__ == '__main__':
-    prefix_path = 'corpus/dureader/preprocessed/preprocessed/'
-    train_files = [prefix_path + 'trainset/search.train.json']
-    dev_files = [prefix_path + 'devset/search.train.json']
-    test_files = [prefix_path + 'testset/search.train.json']
+    prefix_path = '/export/home/sunhongchao1/2-MRC/Workspace-of-MRC/corpus/dureader/preprocessed/'
+    train_files = [os.path.join(prefix_path, 'trainset/zhidao.train.json')]
+    dev_files = [os.path.join(prefix_path, 'devset/zhidao.dev.json')]
+    test_files = [os.path.join(prefix_path, 'testset/zhidao.test.json')]
 
     dataset = Dataset_DuReader(max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
 
-    train_batches = dataset.gen_mini_batches('train', 32, pad_id, shuffle=True)
+    train_batches = dataset.gen_mini_batches('train', 32, '0', shuffle=True)
+    
+    count = 5
+
     for batch in train_batches:
+        count = count - 1
         print(batch)
+        if count < 0:
+            break

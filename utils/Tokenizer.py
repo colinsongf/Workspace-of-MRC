@@ -229,13 +229,10 @@ def build_tokenizer(corpus_files, corpus_type, embedding_type):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     emb_type = 'tencent'
     tokenizer = Tokenizer(origin_file = "a.txt", max_seq_len=32, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
     text = "中文自然语言处理，Natural Language Process"
     print(tokenizer.word2idx)
     print(tokenizer.idx2word)
     print(tokenizer.encode("中文"))
-=======
     build_tokenizer(['corpus.txt'], 'entity', 'tencent')
->>>>>>> 62b1a3da3dd9d5b08da5682e15afd7387dd4588b

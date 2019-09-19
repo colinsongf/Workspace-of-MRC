@@ -7,13 +7,23 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 import tensorflow as tf
+<<<<<<< Updated upstream
+=======
+import  numpy as np
+>>>>>>> Stashed changes
 
 from time import strftime, localtime
 
 from span_extraction.models import BiDAF
 from utils.Tokenizer import build_tokenizer
+<<<<<<< Updated upstream
 from utils.DatasetSQuAD2 import DatasetSQuAD2
 from utils.Dataset_DuReader import Dataset_DuReader
+=======
+from span_extraction.models import BIDAF
+from utils.Tokenizer import build_tokenizer
+from utils.DatasetSQuAD2 import DatasetSQuAD2
+>>>>>>> Stashed changes
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -24,6 +34,17 @@ class Instructor:
     def __init__(self, opt):
         self.opt = opt
 
+<<<<<<< Updated upstream
+=======
+        # pre-processing : tokenizer
+        tokenizer = build_tokenizer(fname=[opt.dataset['train'], opt.dataset['test']], max_seq_len=opt.max_seq_len, dat_fname='{0}_tokenizer.dat'.format(opt.dataset_name))
+
+        # build model
+        self.model = opt.model_class(self.opt, tokenizer)
+
+        # build dataset
+        self.train_set, self.dev_set, self.test_set, self.predict_set = opt.dataset()
+>>>>>>> Stashed changes
         # build tokenizer
         tokenizer = build_tokenizer(corpus_files=[opt.dataset_file['train'], opt.dataset_file['test']], max_seq_len=512, corpus_type='qa', embedding_type='tencent')
 
@@ -40,7 +61,11 @@ class Instructor:
 
         # build saver
         self.saver = tf.train.Saver(max_to_keep=1)
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
     def _print_opts(self):
         pass
 
