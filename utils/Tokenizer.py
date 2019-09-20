@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # author: apollo2mars <apollo2mars@gmail.com>
 
-# problems: load other embedding
+# problem: vocabulary and word2vec not saved
 # pickle hdf5
 
 import pickle
@@ -14,13 +14,23 @@ sys.path.append(path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 class Tokenizer(object):
+    """ Tokenizer
 
-    def __init__(self, corpus_files, emb_type):
-        """ Tokenizer for Machine Reading Comprehension
-        :param corpus_files: origin corpus for build tokenizer's worid2idx and idx2word
-        :param emb_type: choice embedding type for tokenizer's embedding matrix
+    1. Input : max length of context
+    2. Get vocabulary dict : self.word2idx and self.idx2word
+    3. Get word2vec
+    3. Get
+        if embedding matrix exits, load from exit file
+        else build new embedding matrix
+    """
+    def __init__(self, corpus_files, task_type, emb_type):
         """
+        :param corpus_files:
+        :param emb_type:
+        """
+
         self.emb_type = emb_type.lower()
+
         self.lower = True
 
         tmp_text = ''
@@ -30,9 +40,19 @@ class Tokenizer(object):
             fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
             lines = fin.readlines()
             fin.close()
-            for line in lines:
-                text_raw = line[0].lower().strip()
-                tmp_text += text_raw + " "
+            for idx, line in enumerate(lines):
+                if task_type == 'NER':
+                    text_raw = line[0].lower().strip()
+                    tmp_text += text_raw + " "
+                elif task_type == 'CLF':
+                    cut_line = line.split("\t")
+                    if len(cut_line) == 2:
+                        text_raw = cut_line[1].lower().strip()
+                        tmp_text += text_raw + " "
+                elif task_type == "ABSA":
+                    if idx % 4 == 0:
+                        tmp_text += line 
+                    
         self.fit_text = tmp_text
 
         self.embedding_info = {}
@@ -79,8 +99,6 @@ class Tokenizer(object):
         :param input_text: text for generate vocabulary
         :return: null
         """
-
-        # if file is exist, skip
 
         if self.lower:
             tmp_text = input_text.lower()
@@ -130,18 +148,6 @@ class Tokenizer(object):
         :param word2idx: word2idx
         :return:
         """
-        if os.path.exists(dat_fname):
-            print("use exist embedding file")
-            embedding_matrix = pickle.load(open(dat_fname, 'rb'))
-        elif self.emb_type == 'random':
-            embedding_matrix = np.zeros((len(word2idx) + 2, 300))
-            pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-        elif self.emb_type == 'tencent':
-            embedding_matrix = np.zeros((len(word2idx) + 2, 200))
-            embedding_matrix[0] = np.zeros(200) # Padding 
-            unknown_words_vector = np.random.rand(200)
-            embedding_matrix[len(word2idx)+1] = unknown_words_vector  # Unknown words 
-            
         if self.emb_type == 'random':
             embedding_matrix = np.zeros((len(word2idx) + 2, 300))
         elif self.emb_type == 'tencent':
@@ -156,57 +162,13 @@ class Tokenizer(object):
                 else:
                     embedding_matrix[idx] = unknown_words_vector
 
-            pickle.dump(embedding_matrix, open(dat_fname, 'wb'))
-
         elif self.emb_type == 'bert':
             pass
        
         self.embedding_matrix = embedding_matrix
-        
-    def __pad_and_truncate(self, sequence, maxlen, dtype='int64', padding='post', truncating='post', value=0):
-        """
-        :param sequence:
-        :param maxlen:
-        :param dtype:
-        :param padding:
-        :param truncating:
-        :param value:
-        :return: sequence after padding and truncate
-        """
-        x = (np.ones(maxlen) * value).astype(dtype)
-
-        if truncating == 'pre':
-            trunc = sequence[-maxlen:]
-        else:
-            trunc = sequence[:maxlen]
-            trunc = np.asarray(trunc, dtype=dtype)
-        if padding == 'post':
-            x[:len(trunc)] = trunc
-        else:
-            x[-len(trunc):] = trunc
-        return x
-
-    def encode(self, text, reverse=False, padding='post', truncating='post'):
-        """
-        :param text:
-        :param reverse:
-        :param padding:
-        :param truncating:
-        :return: convert text to numberical digital features with max length, paddding
-        and truncating
-        """
-        if self.lower:
-            text_lower = text.lower()
-        words = list(text_lower)
-        unknown_idx = 0
-        sequence = [self.word2idx[w] if w in self.word2idx else unknown_idx for w in words]
-        if len(sequence) == 0:
-            sequence = [0]
-        if reverse:
-            sequence = sequence[::-1]
 
 
-def build_tokenizer(corpus_files, corpus_type, embedding_type):
+def build_tokenizer(corpus_files, corpus_type, task_type, embedding_type):
     """
     corpus files and corpus type can merge
     """
@@ -214,25 +176,22 @@ def build_tokenizer(corpus_files, corpus_type, embedding_type):
     if os.path.exists(tokenizer_path):
         print('load exist tokenizer:', tokenizer_path)
         tokenizer = pickle.load(open(tokenizer_path, 'rb'))
+
+        with open("vocab.txt", mode='w', encoding='utf-8') as f:
+            for key, value in tokenizer.word2idx.items():
+                f.write(str(key) + '\t' + str(value) + '\n')
+
     else:
         print('build new tokenizer:', tokenizer_path)
-        tokenizer = Tokenizer(corpus_files=corpus_files,
-                              emb_type=embedding_type)
+        tokenizer = Tokenizer(corpus_files=corpus_files, task_type=task_type, emb_type=embedding_type)
         pickle.dump(tokenizer, open(tokenizer_path, 'wb'))
-    return tokenizer
 
-    def encode_label():
-        pass
-    
-    def dataset():
-        pass
+        with open("vocab.txt", mode='w', encoding='utf-8') as f:
+            for key, value in tokenizer.word2idx.items():
+                f.write(str(key) + '\t' + str(value) + '\n')
+
+    return tokenizer
 
 
 if __name__ == '__main__':
-    emb_type = 'tencent'
-    tokenizer = Tokenizer(origin_file = "a.txt", max_seq_len=32, emb_type=emb_type, dat_fname=emb_type+"_tokenizer.dat")
-    text = "中文自然语言处理，Natural Language Process"
-    print(tokenizer.word2idx)
-    print(tokenizer.idx2word)
-    print(tokenizer.encode("中文"))
     build_tokenizer(['corpus.txt'], 'entity', 'tencent')
