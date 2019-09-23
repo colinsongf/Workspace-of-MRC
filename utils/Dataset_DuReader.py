@@ -84,7 +84,7 @@ class Dataset_DuReader(object):
         [sample1, sample2, ..., ]
         """
 
-    def _load_dataset_preprocess(self, data_path, train=False):
+    def _load_dataset_preprocessed(self, data_path, train=False):
         """
         Loads the dataset
         Args:
@@ -171,7 +171,7 @@ class Dataset_DuReader(object):
             x[-len(trunc):] = trunc
         return x
 
-    def _encode_text_sequence(self, text, max_seq_len, do_padding, do_reverse):
+    def __encode_text_sequence(self, text, max_seq_len, do_padding, do_reverse):
         """
         :param text:
         :return: convert text to numberical digital features with max length, paddding
@@ -193,17 +193,19 @@ class Dataset_DuReader(object):
         return sequence
 
     def convert_text_to_index(self):
-        for sample in self.train_set:
-            # question encode
-            sample['question'] = self._encode_text_sequence(sample['question'], self.max_q_len, True, False)
 
-            # answer encode
-            sample['answer'] = [self._encode_text_sequence(item) for item in sample['answers']]
+        for tmp_dataset in [self.train_set, self.dev_set, self.test_set]:
+            for sample in tmp_dataset:
+                # question encode
+                sample['question'] = self.__encode_text_sequence(sample['question'], self.max_q_len, True, False)
 
-            # documents encode
-            for document in sample['documents']:
-                document['title'] = self._encode_text_sequence(document['title']);
-                document['paragraphs'] = [self._encode_text_sequence(item) for item in document['paragraphs']]
+                # answer encode
+                sample['answer'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in sample['answers']]
+
+                # documents encode
+                for document in sample['documents']:
+                    document['title'] = self.__encode_text_sequence(document['title'])
+                    document['paragraphs'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in document['paragraphs']]
 
 
 if __name__ == '__main__':
@@ -217,4 +219,10 @@ if __name__ == '__main__':
     tokenizer = build_tokenizer(corpus_files=[train_files, test_files, dev_files], corpus_type='MRC', embedding_type='tencent')
 
     dataset = Dataset_DuReader(tokenizer, max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
-
+    dataset.convert_text_to_index()
+    print("train" + "*"*50)
+    print(dataset.train_set[:3])
+    print("dev" + "*"*50)
+    print(dataset.dev_set[:3])
+    print("test" + "*"*50)
+    print(dataset.test_set[:3])

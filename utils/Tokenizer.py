@@ -81,7 +81,7 @@ class Tokenizer(object):
             'Static':{
                 "Word2Vec":"",
                 "Glove":"",
-                "tencent":"../resources/Tencent_AILab_ChineseEmbedding.txt"
+                "tencent":"../resource/Tencent_AILab_ChineseEmbedding.txt"
             },
             'Dynamic':{
                 "BERT":"",
