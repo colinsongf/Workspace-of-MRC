@@ -7,14 +7,13 @@ import os
 import logging
 import numpy as np
 from collections import Counter
-from  utils.Tokenizer import build_tokenizer
-
 
 class Dataset_DuReader(object):
     """
     This module implements the APIs for loading and using baidu reading comprehension dataset
     """
-    def __init__(self, tokenizer,  max_p_num, max_p_len, max_q_len, train_files=[], dev_files=[], test_files=[]):
+    def __init__(self, tokenizer,  max_p_num, max_p_len, max_q_len,
+                 train_files=[], dev_files=[], test_files=[]):
         # 共6个参数
         self.logger = logging.getLogger("brc")
         self.tokenizer = tokenizer
@@ -56,6 +55,8 @@ class Dataset_DuReader(object):
         :return: document, quesiton, answer, question_type, fact_or_opinion
         """
 
+        print(">>>>>", data_path)
+
         with open(data_path) as fin:
             data_set = []
             for lidx, line in enumerate(fin):
@@ -67,9 +68,9 @@ class Dataset_DuReader(object):
 
                 # document
                 if train:
-                    sample['document'] = item['document']['most_related_para']
+                    sample['documents'] = item['documents']['most_related_para']
                 else:
-                    sample['document'] = item['document']
+                    sample['documents'] = item['documents']
 
                 # question
                 sample['question'] = item['question']
@@ -210,13 +211,20 @@ class Dataset_DuReader(object):
 
 if __name__ == '__main__':
 
-    prefix_path = 'corpus/dureader'
+    prefix_path = '/export/home/sunhongchao1/2-MRC/Workspace-of-MRC/corpus/dureader'
     dataset_type = 'raw'
-    train_files = [os.path.join(prefix_path, dataset_type, 'trainset/search.train.json')]
-    dev_files = [os.path.join(prefix_path, dataset_type, 'devset/search.train.json')]
-    test_files = [os.path.join(prefix_path, dataset_type, 'testset/search.train.json')]
+    train_files = [os.path.join(prefix_path, dataset_type,
+                                'trainset/search.train.json')]
+    dev_files = [os.path.join(prefix_path, dataset_type,
+                              'devset/search.dev.json')]
+    test_files =[os.path.join(prefix_path, dataset_type,
+                              'testset/search.test.json')]
 
-    tokenizer = build_tokenizer(corpus_files=[train_files, test_files, dev_files], corpus_type='MRC', embedding_type='tencent')
+
+    from Tokenizer import build_tokenizer
+    tokenizer = build_tokenizer(corpus_files=[train_files, test_files,
+                                              dev_files],
+                                corpus_type="DuReader", task_type='MRC', embedding_type='tencent')
 
     dataset = Dataset_DuReader(tokenizer, max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
     dataset.convert_text_to_index()

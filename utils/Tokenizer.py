@@ -35,7 +35,7 @@ class Tokenizer(object):
 
         tmp_text = ''
         for fname in corpus_files:
-            if fname.strip() == '':
+            if str(fname).strip() == '':
                 continue
             fin = open(fname, 'r', encoding='utf-8', newline='\n', errors='ignore')
             lines = fin.readlines()
@@ -52,6 +52,8 @@ class Tokenizer(object):
                 elif task_type == "ABSA":
                     if idx % 4 == 0:
                         tmp_text += line 
+                elif task_type == "MRC":
+                    tmp_text += line + " "
                     
         self.fit_text = tmp_text
 
