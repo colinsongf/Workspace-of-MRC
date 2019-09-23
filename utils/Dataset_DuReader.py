@@ -205,8 +205,12 @@ class Dataset_DuReader(object):
 
                 # documents encode
                 for document in sample['documents']:
-                    document['title'] = self.__encode_text_sequence(document['title'])
-                    document['paragraphs'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in document['paragraphs']]
+                    if document['is_selected'] == "true":
+                        document['title'] = self.__encode_text_sequence(document['title'])
+                        document['paragraphs'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in document['paragraphs']]
+                        sample['context'] = document['title'] + document['paragraphs']
+                    else:
+                        continue
 
 
 if __name__ == '__main__':
