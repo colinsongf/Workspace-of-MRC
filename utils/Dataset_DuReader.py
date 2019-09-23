@@ -14,8 +14,11 @@ class Dataset_DuReader(object):
     """
     def __init__(self, tokenizer,  max_p_num, max_p_len, max_q_len,
                  train_files=[], dev_files=[], test_files=[]):
-        # 共6个参数
         self.logger = logging.getLogger("brc")
+
+        self.tokenizer = tokenizer
+        self.word2idx = tokenizer.word2idx
+
         self.tokenizer = tokenizer
         self.max_p_num = max_p_num
         self.max_p_len = max_p_len
@@ -24,7 +27,7 @@ class Dataset_DuReader(object):
         self.train_set, self.dev_set, self.test_set = [], [], []
         if train_files:
             for train_file in train_files:
-                self.train_set += self._load_dataset_raw(train_file, train=True)
+                self.train_set += self._load_dataset_raw(train_file)
             self.logger.info('Train set size: {} questions.'.format(len(self.train_set)))
 
         if dev_files:
@@ -57,29 +60,34 @@ class Dataset_DuReader(object):
 
         print(">>>>>", data_path)
 
+        data_set = []
         with open(data_path) as fin:
-            data_set = []
             for lidx, line in enumerate(fin):
                 sample = {}
                 item = json.loads(line.strip())
 
                 if item['question_type'] != "DESCRIPTION":
                     continue
+                
+                if 'documents' not in item.keys():
+                    continue
+                if 'question' not in item.keys():
+                    continue
+                if 'answers' not in item.keys():
+                    continue
 
                 # document
-                if train:
-                    sample['documents'] = item['documents']['most_related_para']
-                else:
-                    sample['documents'] = item['documents']
+                sample['documents'] = item['documents']
 
                 # question
                 sample['question'] = item['question']
 
                 # answer
-                sample['answer'] = item['answers'][0]
+                sample['answers'] = item['answers']
 
                 data_set.append(sample)
 
+        return data_set
         """
         output data structure
         [sample1, sample2, ..., ]
@@ -198,17 +206,17 @@ class Dataset_DuReader(object):
         for tmp_dataset in [self.train_set, self.dev_set, self.test_set]:
             for sample in tmp_dataset:
                 # question encode
-                sample['question'] = self.__encode_text_sequence(sample['question'], self.max_q_len, True, False)
+                sample['index_question'] = self.__encode_text_sequence(sample['question'], self.max_q_len, True, False)
 
                 # answer encode
-                sample['answer'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in sample['answers']]
+                sample['index_answer'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in sample['answers']]
 
                 # documents encode
                 for document in sample['documents']:
-                    if document['is_selected'] == "true":
-                        document['title'] = self.__encode_text_sequence(document['title'])
+                    if document['is_selected'] == True:
+                        document['title'] = self.__encode_text_sequence(document['title'], self.max_p_len, True, False)
                         document['paragraphs'] = [self.__encode_text_sequence(item, self.max_p_len, True, False) for item in document['paragraphs']]
-                        sample['context'] = document['title'] + document['paragraphs']
+                        sample['index_context'] = document['title'] + document['paragraphs']
                     else:
                         continue
 
@@ -230,7 +238,8 @@ if __name__ == '__main__':
                                               dev_files],
                                 corpus_type="DuReader", task_type='MRC', embedding_type='tencent')
 
-    dataset = Dataset_DuReader(tokenizer, max_p_num=5, max_p_len=5, max_q_len=5, train_files=train_files, dev_files=dev_files, test_files=test_files)
+    dataset = Dataset_DuReader(tokenizer, max_p_num=5, max_p_len=128,
+                               max_q_len=32, train_files=train_files, dev_files=dev_files, test_files=test_files)
     dataset.convert_text_to_index()
     print("train" + "*"*50)
     print(dataset.train_set[:3])
