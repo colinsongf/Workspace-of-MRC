@@ -21,3 +21,15 @@
 + https://github.com/tensorflow/models/blob/master/tutorials/image/cifar10/cifar10_multi_gpu_train.py
 
 
+https://github.com/xylcbd/blogs_code/blob/master/tensorflow-mnist-multi-gpu/cnn.py
+
+compute gradient
+https://zhuanlan.zhihu.com/p/23060519
+
+apply gradient
+https://www.cnblogs.com/marsggbo/p/10056057.html
+
+horovod
+https://zhuanlan.zhihu.com/p/75318339
+
+https://link.zhihu.com/?target=https%3A//lambdalabs.com/blog/bert-multi-gpu-implementation-using-tensorflow-and-horovod-with-code/

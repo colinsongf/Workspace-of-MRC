@@ -132,7 +132,6 @@ def average_gradients(tower_grads):
 
 
 def train():
-  """Train CIFAR-10 for a number of steps."""
   with tf.Graph().as_default(), tf.device('/cpu:0'):
     # Create a variable to count the number of train() calls. This equals the
     # number of batches processed * FLAGS.num_gpus.
